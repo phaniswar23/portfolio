@@ -1,0 +1,575 @@
+/* Dual-Mode Toggle Switch */
+.stack-mode-toggle {
+  display: flex;
+  background: rgba(13, 19, 33, 0.4);
+  backdrop-filter: blur(12px);
+  padding: 0.25rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 1.5rem;
+  position: relative;
+  z-index: 100;
+}
+
+.toggle-btn {
+  padding: 0.6rem 1.4rem;
+  border-radius: 1.8rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  transition: all 0.4s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.toggle-btn.active {
+  color: #020617;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  background: white;
+  border-radius: 1.8rem;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Base Tech Stack Section */
+.tech-stack-section {
+  position: relative;
+  min-height: 100vh;
+  background: #020617;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+/* 3D Atmospheric Background System */
+.tech-atmosphere {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 50%, #0f172a 0%, #020617 100%);
+}
+
+/* Layer: 3D Perspective Grid */
+.bg-grid-3d {
+  position: absolute;
+  inset: -20%;
+  background-image: 
+    linear-gradient(rgba(6, 182, 212, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(6, 182, 212, 0.04) 1px, transparent 1px);
+  background-size: 50px 50px;
+  transform: perspective(1000px) rotateX(60deg) translateY(-100px);
+  mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+  opacity: 0.5;
+  z-index: 1;
+  transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Layer: Moving Glows */
+.bg-glow-cluster {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  mix-blend-mode: screen;
+}
+
+.glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(150px);
+  opacity: 0.06;
+  animation: orb-move 30s infinite alternate ease-in-out;
+}
+
+.glow-orb.cyan { width: 600px; height: 600px; background: #22d3ee; top: 10%; left: 20%; animation-duration: 25s; }
+.glow-orb.blue { width: 800px; height: 800px; background: #3b82f6; bottom: 15%; right: 15%; animation-delay: -5s; animation-duration: 35s; }
+.glow-orb.purple { width: 500px; height: 500px; background: #a855f7; top: 45%; left: 40%; animation-delay: -12s; }
+
+@keyframes orb-move {
+  0% { transform: translate(-50px, -50px) scale(1); }
+  100% { transform: translate(50px, 50px) scale(1.15); }
+}
+
+/* Layer: Parallax Particles */
+.particle-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+}
+
+.tech-particle {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+/* Interaction Sphere */
+.bg-sphere {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 1200px;
+  height: 1200px;
+  border-radius: 50%;
+  filter: blur(130px);
+  z-index: 4;
+  transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+  opacity: 0.8;
+}
+
+/* Grid Mode Styles (Premium Overhaul) */
+.grid-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6rem;
+  width: 100%;
+  margin-top: 6rem;
+  padding-bottom: 8rem;
+  transition: opacity 0.6s ease;
+}
+
+/* Focus Mode: Group Dimming */
+.grid-container.has-focus .category-group {
+  opacity: 0.5;
+  filter: blur(2px);
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.grid-container.has-focus .category-group.active-group {
+  opacity: 1;
+  filter: blur(0);
+}
+
+.category-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.category-title-strip {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.category-title-strip span {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent-color);
+  white-space: nowrap;
+}
+
+.title-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.1), transparent);
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .skills-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (min-width: 1280px) {
+  .skills-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+
+/* Card Engineering: High-End Object */
+.skill-card {
+  height: 140px;
+  background: rgba(13, 19, 33, 0.45);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  transition: 
+    transform 0.1s linear, 
+    opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.4s ease,
+    border-color 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  transform-style: preserve-3d;
+}
+
+/* Light Tracking Layer */
+.card-light-tracker {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(var(--brand-color-rgb), 0.15) 0%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.skill-card:hover .card-light-tracker {
+  opacity: 1;
+}
+
+/* Focus Mode: Card Level Dimming */
+.has-focus .skill-card {
+  opacity: 0.4;
+  scale: 0.96;
+}
+
+.has-focus .skill-card.focused {
+  opacity: 1 !important;
+  scale: 1 !important;
+  z-index: 10;
+}
+
+.skill-card:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(var(--brand-color-rgb), 0.5);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(var(--brand-color-rgb), 0.2),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* Reflection Sweep */
+.skill-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.03),
+    transparent
+  );
+}
+
+.skill-card:hover::after {
+  left: 200%;
+  transition: left 1s ease-in-out;
+}
+
+/* Logo Dynamics */
+.skill-card img, .skill-card .skill-icon {
+  width: 40px;
+  height: 40px;
+  filter: brightness(0.85); 
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 1;
+  transform: translateZ(25px);
+}
+
+.skill-card:hover img, .skill-card:hover .skill-icon {
+  filter: brightness(1) drop-shadow(0 0 15px rgba(var(--brand-color-rgb), 0.6));
+  transform: scale(1.15) translateZ(40px);
+}
+
+.skill-card span {
+  font-size: 0.75rem;
+  font-weight: 850;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  z-index: 1;
+  transition: all 0.4s ease;
+  transform: translateZ(15px);
+}
+
+.skill-card:hover span {
+  color: white;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+/* Atmospheric effects */
+.grid-orb {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 1000px;
+  height: 1000px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(var(--accent-color-rgb), 0.05) 0%, transparent 70%);
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Adjustments for Focus mode visibility during grid */
+.focus-hub.minimized {
+  pointer-events: none;
+}
+
+/* Upright Node Fix for Focus Orbit */
+.focus-node-upright {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Animations and existing styles retained below */
+@keyframes pulse-sphere {
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+@keyframes orbit-cw {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes orbit-ccw {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.orbit-rotate-cw {
+  animation: orbit-cw var(--duration) linear infinite;
+}
+
+.orbit-rotate-ccw {
+  animation: orbit-ccw var(--duration) linear infinite;
+}
+
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  33% { transform: translateY(-20px) translateX(10px); }
+  66% { transform: translateY(10px) translateX(-15px); }
+}
+
+/* Reuse existing focus cluster styles */
+.focus-hub {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.orbit-system {
+  position: absolute;
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.focus-core {
+  width: 140px;
+  height: 140px;
+  background: rgba(13, 19, 33, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 40px rgba(6, 182, 212, 0.1);
+}
+
+.core-label {
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-top: 0.5rem;
+}
+
+.focus-node-wrapper {
+  position: absolute;
+  transform-origin: 0 0;
+}
+
+.node-icon-box {
+  width: 64px;
+  height: 64px;
+  background: rgba(13, 19, 33, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s ease;
+}
+
+.focus-node-upright:hover .node-icon-box {
+  transform: scale(1.15);
+  border-color: var(--brand-color);
+  box-shadow: 0 0 30px rgba(var(--brand-color-rgb), 0.3);
+}
+
+.node-label {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.3s ease;
+}
+
+.focus-node-upright:hover .node-label {
+  color: white;
+}
+
+.focus-tooltip {
+  position: absolute;
+  top: -45px;
+  left: 50%;
+  transform: translateX(-50%) translateY(5px);
+  background: rgba(13, 19, 33, 0.95);
+  border: 1px solid var(--brand-color);
+  padding: 0.4rem 0.8rem;
+  border-radius: 0.5rem;
+  font-size: 0.65rem;
+  font-weight: 900;
+  color: white;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 100;
+  white-space: nowrap;
+}
+
+.focus-node-upright:hover .focus-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Mobile Responsiveness & Layout Overhaul */
+@media (max-width: 768px) {
+  .tech-stack-section {
+    padding: 4rem 0 8rem; /* Space for bottom selector */
+    min-height: auto;
+  }
+
+  .tech-atmosphere {
+    height: 100%;
+  }
+
+  .grid-container {
+    gap: 3rem;
+    margin-top: 3rem;
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem;
+  }
+
+  .skill-card {
+    height: 120px;
+    border-radius: 1.25rem;
+    gap: 0.5rem;
+  }
+
+  .skill-card img, .skill-card .skill-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .skill-card span {
+    font-size: 0.65rem;
+  }
+
+  /* Bottom Mode Toggle and Selector Positioning */
+  .stack-mode-toggle {
+    margin-top: 1rem;
+    scale: 0.9;
+  }
+
+  .category-selector {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 400px;
+    background: rgba(13, 19, 33, 0.8);
+    backdrop-filter: blur(20px);
+    padding: 0.75rem;
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    margin-top: 0;
+    justify-content: space-around;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    z-index: 1000;
+  }
+
+  .selector-pill {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.55rem;
+    flex-shrink: 0;
+  }
+
+  /* Orbit Scaling for Mobile */
+  .focus-hub {
+    height: 350px;
+    transform: scale(0.7);
+    margin-top: 0;
+  }
+
+  .focus-core {
+    width: 100px;
+    height: 100px;
+  }
+
+  .node-icon-box {
+    width: 48px;
+    height: 48px;
+  }
+
+  .node-label {
+    font-size: 0.6rem;
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 480px) {
+  .skills-grid {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .tech-stack-section h2 {
+    font-size: 3.5rem !important;
+  }
+}
