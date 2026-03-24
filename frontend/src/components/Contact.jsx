@@ -39,12 +39,34 @@ const Contact = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Basic Validation
+    if (!formData.name || !formData.email || !formData.message) {
+      setStatus('error');
+      setErrorMessage('Please fill in all fields.');
+      return;
+    }
+
+    if (!validateEmail(formData.email)) {
+      setStatus('error');
+      setErrorMessage('Please enter a valid email address.');
+      return;
+    }
+
     setStatus('loading');
     
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
       const response = await fetch(`${apiUrl}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -56,17 +78,19 @@ const Contact = () => {
       if (response.ok) {
         setStatus('success');
         setFormData({ name: '', email: '', message: '' });
+        // Reset status after 5 seconds
         setTimeout(() => setStatus('idle'), 5000);
       } else {
         setStatus('error');
-        setErrorMessage(data.error || 'Something went wrong.');
+        setErrorMessage(data.error || 'Something went wrong. Please try again.');
       }
     } catch (error) {
       console.error('Submission error:', error);
       setStatus('error');
-      setErrorMessage('Unable to connect to the server.');
+      setErrorMessage('Unable to connect to the server. Please check your connection.');
     }
   };
+
 
   return (
     <section 

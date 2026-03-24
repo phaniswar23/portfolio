@@ -5,39 +5,8 @@ import { Award, ExternalLink, Calendar, Grid, List, X, ZoomIn, Eye, ChevronRight
 import { certificates } from './CertificatesData';
 import './Certificates.css';
 
-const Categories = ["All", "Frontend", "Backend", "Cloud", "Databases", "Others"];
-
 const Certificates = () => {
-  const [filter, setFilter] = useState("All");
-  const [visibleCount, setVisibleCount] = useState(8);
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedCert, setSelectedCert] = useState(null);
-
-  const filteredCertificates = useMemo(() => {
-    return filter === "All" 
-      ? certificates 
-      : certificates.filter(cert => cert.category === filter);
-  }, [filter]);
-
-  const displayedCertificates = useMemo(() => {
-    return filteredCertificates.slice(0, visibleCount);
-  }, [filteredCertificates, visibleCount]);
-
-  const hasMore = visibleCount < filteredCertificates.length;
-
-  const loadMore = () => {
-    setIsLoading(true);
-    // Simulate loading feel
-    setTimeout(() => {
-      setVisibleCount(prev => prev + 4);
-      setIsLoading(false);
-    }, 800);
-  };
-
-  // Reset visible count when filter changes
-  useEffect(() => {
-    setVisibleCount(8);
-  }, [filter]);
 
   return (
     <div className="certificates-container pt-16 pb-24 px-6 md:px-12 dark:bg-[#020617] transition-colors duration-500 min-h-screen relative">
@@ -62,27 +31,10 @@ const Certificates = () => {
           </p>
         </motion.div>
 
-        {/* Controls: Tabs ONLY */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-16">
-          <div className="flex flex-wrap justify-center gap-3">
-            {Categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setFilter(cat)}
-                className={`filter-tab px-6 py-2.5 rounded-full text-sm font-semibold transition-all ${
-                  filter === cat ? 'active' : 'text-slate-500 dark:text-slate-400 hover:text-white font-medium'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
-
         {/* Display Content: Grid Only */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           <AnimatePresence mode="popLayout">
-            {displayedCertificates.map((cert, idx) => (
+            {certificates.map((cert, idx) => (
               <GridCard 
                 key={cert.id} 
                 cert={cert} 
@@ -92,29 +44,6 @@ const Certificates = () => {
             ))}
           </AnimatePresence>
         </div>
-
-        {/* Infinite Scroll / Load More */}
-        {hasMore && (
-          <div className="mt-16 text-center">
-            <button 
-              onClick={loadMore}
-              disabled={isLoading}
-              className="load-more-btn group flex items-center gap-3 mx-auto"
-            >
-              {isLoading ? (
-                <>
-                  <Loader2 size={20} className="animate-spin" />
-                  LOADING...
-                </>
-              ) : (
-                <>
-                  EXPLORE MORE
-                  <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                </>
-              )}
-            </button>
-          </div>
-        )}
       </div>
 
       {/* Compact Modal Preview with Portal */}
@@ -129,6 +58,7 @@ const Certificates = () => {
     </div>
   );
 };
+
 
 /* --- SUB-COMPONENTS --- */
 

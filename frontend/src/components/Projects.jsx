@@ -2,18 +2,74 @@ import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, useMotionValue, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Zap, Layers, Globe, Terminal, Cpu, Database, Layout, Play, Fullscreen } from 'lucide-react';
 
+const ProjectBackground = () => {
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      mouseX.set(e.clientX / window.innerWidth - 0.5);
+      mouseY.set(e.clientY / window.innerHeight - 0.5);
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  const parallaxX = useSpring(useTransform(mouseX, [-0.5, 0.5], [-20, 20]), { damping: 50, stiffness: 200 });
+  const parallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-20, 20]), { damping: 50, stiffness: 200 });
+
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 opacity-40">
+      <motion.div 
+        style={{ x: parallaxX, y: parallaxY }}
+        className="absolute inset-[-10%] bg-[radial-gradient(circle_at_center,#6EE7F915_1px,transparent_1px)] [background-size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_70%,transparent_100%)]"
+      />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
+      <style>{`
+        .noise-texture {
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+          opacity: 0.03;
+          pointer-events: none;
+        }
+        .premium-glass {
+          background: rgba(15, 23, 42, 0.6);
+          backdrop-filter: blur(20px) saturate(180%);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .dark .premium-glass {
+          background: rgba(2, 6, 23, 0.7);
+          border: 1px solid rgba(110, 231, 249, 0.05);
+        }
+        .text-reveal-mask {
+          mask-image: linear-gradient(to right, black, black 50%, transparent);
+          mask-size: 200% 100%;
+          mask-position: 100% 0;
+          transition: mask-position 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .group:hover .text-reveal-mask {
+          mask-position: 0 0;
+        }
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
+    </div>
+  );
+};
+
 
 const projects = [
   {
     title: 'CodeConnect',
     subtitle: 'Developer Social Network',
     description: 'A MERN-based platform for connecting developers and sharing ideas in real time.',
-    image: 'https://images.unsplash.com/photo-1522071823991-b99c5517a72c?q=80&w=800&auto=format&fit=crop',
+    image: '/codeconnect_preview.png',
     video: 'https://assets.mixkit.co/videos/preview/mixkit-software-developer-working-on-code-screen-close-up-1728-large.mp4',
     tags: ['MERN', 'Socket.io', 'Tailwind'],
-    github: 'https://github.com/phaniswar23',
-    live: 'https://codeconnect-v1.onrender.com/',
-    accent: '#6EE7F9',
+    github: 'https://github.com/Balaji-Sri-Ram/CodeConnect',
+    live: 'https://code-connect-sand-eta.vercel.app/',
+    accent: '#6EE7F9', // Cyan
     icon: Globe,
     isFeatured: true
   },
@@ -24,41 +80,43 @@ const projects = [
     image: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?q=80&w=800&auto=format&fit=crop',
     video: 'https://assets.mixkit.co/videos/preview/mixkit-drone-view-of-a-field-of-crops-15965-large.mp4',
     tags: ['PHP', 'Tailwind CSS', 'MySQL'],
-    github: 'https://github.com/phaniswar23',
-    accent: '#ffffff',
+    github: 'https://github.com/phaniswar23/AGRITREK-PROJECT',
+    accent: '#10B981', // Emerald/Green
     icon: Database
   },
   {
     title: 'Word Imposter Game',
     subtitle: 'Multiplayer Strategy',
     description: 'A real-time multiplayer word game built using MERN stack with interactive gameplay.',
-    image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?q=80&w=800&auto=format&fit=crop',
+    image: '/wordimposter_preview.png',
     video: 'https://assets.mixkit.co/videos/preview/mixkit-set-of-dice-rolling-on-a-table-34440-large.mp4',
+
     tags: ['MERN', 'Socket.io', 'Express'],
-    github: 'https://github.com/phaniswar23',
-    accent: '#6EE7F9',
+    github: 'https://github.com/phaniswar23/nodeproj',
+    live: 'https://wordimpostergame.vercel.app/',
+    accent: '#A78BFA', // Purple/Indigo
     icon: Zap
   }
 ];
+
+
 
 const ProjectCard = ({ project, index }) => {
   const cardRef = useRef(null);
   const videoRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isSectionInView, setIsSectionInView] = useState(false);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+  const mouseX = useMotionValue(0.5);
+  const mouseY = useMotionValue(0.5);
 
-  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [5, -5]), { damping: 40, stiffness: 120 });
-  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-5, 5]), { damping: 40, stiffness: 120 });
+  const rotateX = useSpring(useTransform(mouseY, [0, 1], [8, -8]), { damping: 40, stiffness: 120 });
+  const rotateY = useSpring(useTransform(mouseX, [0, 1], [-8, 8]), { damping: 40, stiffness: 120 });
 
   const handleMouseMove = (e) => {
     if (!cardRef.current) return;
-    window.requestAnimationFrame(() => {
-      const rect = cardRef.current.getBoundingClientRect();
-      mouseX.set((e.clientX - rect.left) / rect.width - 0.5);
-      mouseY.set((e.clientY - rect.top) / rect.height - 0.5);
-    });
+    const rect = cardRef.current.getBoundingClientRect();
+    mouseX.set((e.clientX - rect.left) / rect.width);
+    mouseY.set((e.clientY - rect.top) / rect.height);
   };
 
   useEffect(() => {
@@ -80,52 +138,88 @@ const ProjectCard = ({ project, index }) => {
       }
     }
   }, [isHovered, isSectionInView]);
-  
-  // Also pause video if section goes out of view
-  useEffect(() => {
-    if (!isSectionInView && videoRef.current) {
-      videoRef.current.pause();
-    }
-  }, [isSectionInView]);
 
   return (
     <motion.div
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => { setIsHovered(false); mouseX.set(0); mouseY.set(0); }}
-      initial={{ opacity: 0, scale: 0.98 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      whileHover={{ y: -6 }}
+      onMouseLeave={() => { setIsHovered(false); mouseX.set(0.5); mouseY.set(0.5); }}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.4 }}
-      style={{ rotateX, rotateY, perspective: 1000, transformStyle: 'preserve-3d' }}
-      className="group relative w-full h-[520px] will-change-transform"
+      transition={{ 
+        duration: 0.8, 
+        delay: index * 0.15,
+        type: "spring",
+        stiffness: 100,
+        damping: 20
+      }}
+      style={{ rotateX, rotateY, perspective: 1500, transformStyle: 'preserve-3d' }}
+      className="group relative w-full h-[540px] will-change-transform"
     >
-      {/* ── Minimal Glow Border ── */}
-      <div className={`absolute -inset-[1px] rounded-[2rem] opacity-0 group-hover:opacity-100 blur-[1px] transition-opacity duration-500 -z-10 bg-gradient-to-br from-[#6EE7F9]/20 via-transparent to-[#A78BFA]/20`} />
+      {/* ── Ambient Glow ── */}
+      <div className={`absolute -inset-10 bg-[radial-gradient(circle_at_center,#6EE7F90a_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -z-20`} />
+      
+      {/* ── Gradient Border ── */}
+      <div className={`absolute -inset-[1px] rounded-[2.5rem] opacity-20 group-hover:opacity-100 blur-[2px] transition-all duration-700 -z-10 bg-gradient-to-tr from-cyan-500 via-purple-500 to-blue-500`} />
 
-      <div className="h-full rounded-[2.5rem] overflow-hidden flex flex-col shadow-[var(--shadow-premium)] transition-all duration-500 relative border border-border bg-card dark:backdrop-blur-md dark:shadow-none">
+      <div className="h-full rounded-[2.5rem] overflow-hidden flex flex-col premium-glass shadow-2xl transition-all duration-500 relative">
+        <div className="absolute inset-0 noise-texture" />
         
-        {/* ── Visual Engine (Image -> Video) ── */}
-        <div className="w-full h-[48%] relative overflow-hidden bg-slate-100 dark:bg-black/40 h-44 md:h-52 font-bold mb-0">
-           {/* Static Thumbnail */}
+        {/* ── Cursor Follow Light ── */}
+        <motion.div 
+          className="absolute inset-0 z-10 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{
+            background: useTransform(
+              [mouseX, mouseY],
+              ([x, y]) => `radial-gradient(600px circle at ${x * 100}% ${y * 100}%, rgba(110, 231, 249, 0.08), transparent 40%)`
+            )
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none" />
+
+        {/* ── Visual Engine ── */}
+        <div className="w-full h-64 relative overflow-hidden bg-slate-900/50">
+           {/* Color Tint & Back-Glow */}
+           <div 
+             className="absolute inset-x-0 bottom-0 h-1/2 opacity-30 z-10 pointer-events-none transition-gpu"
+             style={{ background: `radial-gradient(circle at bottom, ${project.accent}22, transparent 70%)` }}
+           />
+           <div className={`absolute inset-0 z-0 opacity-20 pointer-events-none transition-opacity duration-700 ${isHovered ? 'opacity-40' : 'opacity-20'}`} style={{ backgroundColor: project.accent }} />
+
            <motion.div 
-             animate={{ scale: isHovered ? 1.05 : 1, filter: isHovered ? 'blur(4px) brightness(0.6)' : 'blur(0px) brightness(0.95)' }}
-             transition={{ duration: 0.8 }}
+             animate={{ 
+               scale: isHovered ? 1.08 : 1, 
+               filter: isHovered ? 'blur(2px) brightness(1.1) contrast(1.2) saturate(1.4)' : 'blur(0px) brightness(0.95) contrast(1.1) saturate(1.2)' 
+             }}
+             transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
              className="absolute inset-0"
            >
-             <img src={project.image} alt={project.title} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" />
+             <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-gpu" />
+             
+             {/* Readability Gradient Overlay */}
+             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/20 to-slate-950/90 z-20 pointer-events-none" />
+             
+             {/* Micro Noise Overlay */}
+             <div className="absolute inset-0 noise-texture opacity-[0.15] z-30 pointer-events-none" />
+             
+             {/* Focus Effect (Sharpen subject area) */}
+             <div className={`absolute inset-0 z-40 transition-opacity duration-1000 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
+                <div className="absolute inset-0 [mask-image:radial-gradient(circle_at_center,black_30%,transparent_70%)] pointer-events-none">
+                   <img src={project.image} alt={project.title} className="w-full h-full object-cover scale-[1.08]" />
+                </div>
+             </div>
            </motion.div>
            
-           {/* Video Preview */}
            <AnimatePresence>
+
              {project.video && isSectionInView && (
                <motion.div 
                  initial={{ opacity: 0 }}
                  animate={{ opacity: isHovered ? 1 : 0 }}
                  exit={{ opacity: 0 }}
-                 transition={{ duration: 0.3 }}
+                 transition={{ duration: 0.5 }}
                  className="absolute inset-0 z-20 pointer-events-none"
                >
                  <video 
@@ -134,74 +228,72 @@ const ProjectCard = ({ project, index }) => {
                    muted
                    loop
                    playsInline
-                   preload="auto"
                    className="w-full h-full object-cover"
                  />
-                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 dark:from-[#020617]/80 via-transparent to-transparent" />
+                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
                </motion.div>
              )}
            </AnimatePresence>
 
-           {/* Centered Preview Label */}
-           <div className={`absolute inset-0 z-30 flex items-center justify-center transition-all duration-500 ${isHovered ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
-              <div className="px-4 py-1.5 rounded-full bg-slate-900/80 dark:bg-white/10 dark:backdrop-blur-md border border-slate-700/50 dark:border-white/20 text-white text-[9px] font-black uppercase tracking-[0.2em] shadow-2xl">
-                Preview Interaction
+           <div className="absolute top-6 left-6 z-40">
+              <div 
+                className="px-3 py-1 rounded-full backdrop-blur-md border border-white/10 text-[9px] font-black uppercase tracking-[0.2em]"
+                style={{ backgroundColor: `${project.accent}22`, color: project.accent, textShadow: `0 0 10px ${project.accent}44` }}
+              >
+                {project.subtitle}
               </div>
            </div>
-
-           {/* Featured Badge */}
-             <div className="absolute top-4 left-4 z-40">
-                <div className="px-2.5 py-0.5 rounded-full bg-[#6EE7F9]/10 border border-[#6EE7F9]/20 text-[#6EE7F9] text-[8px] font-black uppercase tracking-[0.15em] backdrop-blur-md">
-                   Featured
-                </div>
-             </div>
+           
+           {/* Inner Shadow Shadow */}
+           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950 to-transparent z-40 pointer-events-none opacity-80" />
         </div>
+
 
         {/* ── Content Matrix ── */}
         <div className="flex-1 p-8 flex flex-col relative z-30">
-           <div style={{ transform: 'translateZ(20px)' }} className="flex flex-col h-full">
-              <div className="flex items-center gap-3 mb-3">
-                 <h3 className="text-xl font-black text-foreground tracking-tighter group-hover:text-[#6EE7F9] transition-colors duration-500">
+           <div style={{ transform: 'translateZ(40px)' }} className="flex flex-col h-full">
+              <div className="flex items-center gap-3 mb-4">
+                 <h3 className="text-2xl font-black text-white tracking-[0.02em] group-hover:text-cyan-400 transition-colors duration-500">
                    {project.title}
                  </h3>
               </div>
 
-              <p className="text-foreground/70 text-xs leading-relaxed mb-6 font-light line-clamp-2 transition-colors duration-300">
+              <p className="text-white/60 text-xs leading-relaxed mb-8 font-medium line-clamp-2 text-reveal-mask">
                  {project.description}
               </p>
 
-              {/* Low-Contrast Tech Shards */}
               <div className="flex flex-wrap gap-2 mb-8">
                  {project.tags.map(tag => (
-                   <span key={tag} className="px-2.5 py-1 rounded-md text-[8px] font-medium text-foreground/50 truncate border border-border bg-card uppercase tracking-widest transition-colors duration-300">
+                   <span key={tag} className="px-3 py-1.5 rounded-full text-[9px] font-bold text-white/50 border border-white/10 bg-white/5 uppercase tracking-widest hover:border-cyan-500/50 hover:text-cyan-400 transition-all duration-300">
                      {tag}
                    </span>
                  ))}
               </div>
 
-              {/* Minimal Actions */}
               <div className="mt-auto flex items-center gap-4">
                  {project.live && (
                    <motion.a 
                      href={project.live}
                      target="_blank"
-                     whileHover={{ scale: 1.02 }}
-                     whileTap={{ scale: 0.98 }}
-                     className="bg-[#6EE7F9] hover:opacity-90 text-black text-[9px] font-bold px-4 py-3 rounded-xl flex items-center justify-center gap-2 flex-1 shadow-lg shadow-[#6EE7F9]/20 dark:shadow-none transition-all"
+                     whileHover={{ scale: 1.05, y: -2 }}
+                     whileTap={{ scale: 0.95 }}
+                     className="relative overflow-hidden group/btn bg-cyan-500 text-slate-900 text-[10px] font-black px-6 py-4 rounded-xl flex items-center justify-center gap-2 flex-1 shadow-[0_10px_20px_-10px_rgba(110,231,249,0.5)] transition-all"
                    >
-                     Live Preview <Globe size={12} />
+                     <span className="relative z-10 flex items-center gap-2">
+                       LIVE PREVIEW <ExternalLink size={14} className="group-hover/btn:translate-x-1 transition-transform" />
+                     </span>
+                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:animate-[shimmer_1.5s_infinite] transition-transform" />
                    </motion.a>
                  )}
 
                  <motion.a 
                    href={project.github}
                    target="_blank"
-                   whileHover={{ scale: 1.02 }}
-                   whileTap={{ scale: 0.98 }}
-                   className={`text-[9px] font-bold px-4 py-3 rounded-xl flex items-center justify-center gap-2 flex-1 transition-all border
-                     ${project.live ? 'bg-card text-foreground hover:bg-slate-50/50 dark:hover:bg-white/[0.02] border-border shadow-[var(--shadow-soft)] dark:shadow-none' : 'bg-[#6EE7F9] hover:opacity-90 text-black shadow-lg shadow-[#6EE7F9]/20 dark:shadow-none border-[#6EE7F9]'}`}
+                   whileHover={{ scale: 1.05, y: -2 }}
+                   whileTap={{ scale: 0.95 }}
+                   className={`text-[10px] font-black px-6 py-4 rounded-xl flex items-center justify-center gap-2 flex-1 transition-all border border-white/10 bg-white/5 text-white hover:bg-white/10 hover:border-white/20 hover:shadow-[0_10px_20px_-10px_rgba(255,255,255,0.1)]`}
                  >
-                   View Code <Github size={12} />
+                   SOURCE CODE <Github size={14} className="group-hover:rotate-12 transition-transform" />
                  </motion.a>
               </div>
            </div>
@@ -211,27 +303,37 @@ const ProjectCard = ({ project, index }) => {
   );
 };
 
+
 const Projects = () => {
   return (
-    <section id="projects" className="pt-10 pb-10 px-4 sm:px-8 md:px-12 relative w-full overflow-hidden bg-background text-foreground cursor-default transition-colors duration-500">
+    <section id="projects" className="pt-24 pb-24 px-4 sm:px-8 md:px-12 relative w-full overflow-hidden bg-slate-950 text-foreground cursor-default transition-colors duration-500">
+      <ProjectBackground />
+      
       <div className="max-w-[1400px] mx-auto relative z-10">
-        <header className="mb-24 flex flex-col items-center text-center">
-            <h2 className="text-7xl md:text-9xl font-black tracking-tighter text-foreground dark:text-white/90 leading-[0.85] mb-6 transition-colors duration-300">
-               Projects.
-            </h2>
-            <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-[#6EE7F9]/20 to-transparent mx-auto" />
+        <header className="mb-32 flex flex-col items-center text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="text-8xl md:text-[10rem] font-black tracking-tighter text-white leading-[0.8] mb-8">
+                 Projects<span className="text-cyan-400">.</span>
+              </h2>
+              <div className="w-32 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent mx-auto opacity-50" />
+            </motion.div>
         </header>
 
         {/* ── Main Grid ── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {projects.map((project, index) => (
             <ProjectCard key={project.title} project={project} index={index} />
           ))}
         </div>
-
       </div>
     </section>
   );
 };
+
 
 export default Projects;
