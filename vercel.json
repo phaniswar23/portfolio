@@ -19,8 +19,8 @@
       "destination": "/backend/index.js"
     },
     {
-      "source": "/assets/(.*)",
-      "destination": "/frontend/assets/$1"
+      "source": "/(.*\\.(?:png|jpg|jpeg|gif|svg|webp|ico|js|css|woff|woff2|ttf|otf|mp4|webm))",
+      "destination": "/frontend/$1"
     },
     {
       "source": "/(.*)",
