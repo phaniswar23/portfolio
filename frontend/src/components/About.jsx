@@ -151,8 +151,8 @@ const About = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-[#6EE7F9]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#6EE7F9]/[0.03] blur-[100px] -z-10 group-hover:bg-[#6EE7F9]/[0.05] transition-colors" />
            {[
-             { label: "Projects Built", value: 5 },
-             { label: "Certifications", value: 10 },
+             { label: "Projects Built", value: 2 },
+             { label: "Certifications", value: 3 },
              { label: "Solved Problems", value: 100 }
            ].map((stat, i) => (
              <motion.div 
