@@ -53,7 +53,7 @@ const About = () => {
 
 
   return (
-    <section id="about" ref={containerRef} className="pt-12 pb-10 px-8 sm:px-12 md:px-24 relative max-w-[1600px] mx-auto overflow-hidden bg-background text-foreground transition-colors duration-500">
+    <section id="about" ref={containerRef} className="pt-12 pb-24 px-4 sm:px-12 md:px-24 relative max-w-[1600px] mx-auto overflow-hidden bg-background text-foreground transition-colors duration-500">
       {/* Dynamic Background Elements */}
       <motion.div style={{ y: y1 }} className="absolute top-0 right-10 w-96 h-96 bg-[#6EE7F9]/5 blur-[120px] rounded-full -z-10 opacity-0 dark:opacity-100 transition-opacity duration-500" />
       <motion.div style={{ y: y2 }} className="absolute bottom-40 left-10 w-[500px] h-[500px] bg-[#A78BFA]/5 blur-[140px] rounded-full -z-10 opacity-0 dark:opacity-100 transition-opacity duration-500" />
@@ -65,9 +65,10 @@ const About = () => {
         transition={{ duration: 0.8 }}
         className="mb-16 flex flex-col items-center justify-center text-center mt-0"
       >
-        <h2 className="text-6xl md:text-9xl font-black tracking-tighter text-foreground leading-[0.85] mb-6 transition-colors duration-300">
+        <h2 className="text-4xl sm:text-6xl md:text-9xl font-black tracking-tighter text-foreground leading-[0.85] mb-6 transition-colors duration-300">
           About <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6EE7F9] via-[#A78BFA] to-white italic drop-shadow-[0_0_30px_rgba(110,231,249,0.2)]">ME.</span>
         </h2>
+
         <div className="w-40 h-[1.5px] bg-gradient-to-r from-transparent via-[#6EE7F9]/30 to-transparent mx-auto" />
       </motion.div>
 

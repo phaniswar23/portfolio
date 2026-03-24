@@ -5,7 +5,7 @@ import { SKILL_CATEGORIES } from './SkillsData';
 import './TechStack.css';
 
 const TechStack = () => {
-  const [viewMode, setViewMode] = useState('orbit'); // 'orbit' | 'grid'
+  const [viewMode, setViewMode] = useState(typeof window !== 'undefined' && window.innerWidth < 768 ? 'grid' : 'orbit'); // 'orbit' | 'grid'
   const [activeTab, setActiveTab] = useState(SKILL_CATEGORIES[0].id);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [focusedSkill, setFocusedSkill] = useState(null);
@@ -48,7 +48,7 @@ const TechStack = () => {
   return (
     <section 
       id="tech" 
-      className="tech-stack-section"
+      className="tech-stack-section pb-36"
       onMouseMove={handleMouseMove}
     >
       {/* 3D Atmospheric Background */}
@@ -127,7 +127,7 @@ const TechStack = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-6xl md:text-8xl font-black tracking-tighter text-white leading-none mb-6"
+            className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter text-white leading-none mb-6"
           >
             Tech <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 italic">Stack.</span>
           </motion.h2>

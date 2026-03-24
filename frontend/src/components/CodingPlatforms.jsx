@@ -362,7 +362,7 @@ const SignatureCard = ({ platform, index }) => {
 
         whileHover={{ scale: 1.02, y: -8 }}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="relative flex flex-col justify-between w-full min-h-[540px] p-12 rounded-[40px] bg-white/[0.03] backdrop-blur-[40px] border border-white/[0.08] overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500"
+        className="relative flex flex-col justify-between w-full min-h-[400px] md:min-h-[540px] p-8 md:p-12 rounded-[32px] md:rounded-[40px] bg-white/[0.03] backdrop-blur-[40px] border border-white/[0.08] overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500"
       >
         {/* Animated Gradient Border */}
         <motion.div 
@@ -490,7 +490,7 @@ const CodingPlatforms = () => {
         const r = containerRef.current?.getBoundingClientRect();
         if (r) { mouseX.set(e.clientX - r.left); mouseY.set(e.clientY - r.top); }
       }}
-      className="pt-12 pb-32 md:pt-16 md:pb-64 px-4 md:px-8 bg-[#020306] relative overflow-hidden flex flex-col items-center border-t border-white/[0.02]"
+      className="pt-12 pb-40 px-4 md:px-8 bg-[#020306] relative overflow-hidden flex flex-col items-center border-t border-white/[0.02]"
     >
       {/* Dynamic Cursor Spotlight */}
       <motion.div 
@@ -561,7 +561,7 @@ const CodingPlatforms = () => {
               <Activity className="w-4 h-4 text-emerald-400" />
               <span className="text-[9px] font-black uppercase tracking-[0.4em] text-white/50">Competitive Intelligence</span>
            </div>
-           <h2 className="text-6xl md:text-8xl font-bold text-white tracking-tightest mb-8 leading-none">
+           <h2 className="text-4xl sm:text-6xl md:text-8xl font-bold text-white tracking-tightest mb-8 leading-none">
              Coding Profiles
            </h2>
            <p className="text-white/30 max-w-3xl mx-auto text-xl font-bold font-mono tracking-tighter leading-relaxed italic border-l-2 border-emerald-500/20 pl-8 text-left">

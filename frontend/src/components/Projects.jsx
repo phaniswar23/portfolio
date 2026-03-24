@@ -306,20 +306,21 @@ const ProjectCard = ({ project, index }) => {
 
 const Projects = () => {
   return (
-    <section id="projects" className="pt-24 pb-24 px-4 sm:px-8 md:px-12 relative w-full overflow-hidden bg-slate-950 text-foreground cursor-default transition-colors duration-500">
+    <section id="projects" className="pt-12 pb-32 px-4 sm:px-8 md:px-12 relative w-full overflow-hidden bg-slate-950 text-foreground cursor-default transition-colors duration-500">
       <ProjectBackground />
       
       <div className="max-w-[1400px] mx-auto relative z-10">
-        <header className="mb-32 flex flex-col items-center text-center">
+        <header className="mb-20 flex flex-col items-center text-center">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
             >
-              <h2 className="text-8xl md:text-[10rem] font-black tracking-tighter text-white leading-[0.8] mb-8">
+              <h2 className="text-6xl sm:text-8xl md:text-[10rem] font-black tracking-tighter text-white leading-[0.8] mb-8">
                  Projects<span className="text-cyan-400">.</span>
               </h2>
+
               <div className="w-32 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent mx-auto opacity-50" />
             </motion.div>
         </header>

@@ -99,7 +99,7 @@ const Contact = () => {
     <section 
       ref={sectionRef} 
       id="contact" 
-      className="py-32 px-6 relative min-h-screen flex items-center justify-center overflow-hidden bg-[#02030A]"
+      className="pt-12 pb-40 px-4 sm:px-6 relative min-h-screen flex items-center justify-center overflow-hidden bg-[#02030A]"
     >
       {/* Shared Ambient Layers brought over from EducationJourney for continuity */}
       <GridBackground opacity={0.015} maskEdges={false} />
@@ -150,7 +150,7 @@ const Contact = () => {
               }}
               className="space-y-6"
             >
-              <h2 className="text-6xl md:text-8xl font-black tracking-tight leading-[0.9]">
+              <h2 className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tight leading-[0.9]">
                 <span className="block text-white/95">Let's</span> 
                 <span className="animate-text-shimmer italic bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Connect_</span>
               </h2>
@@ -169,7 +169,7 @@ const Contact = () => {
                 scale: 1.04,
                 boxShadow: "0 40px 80px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(110, 231, 249, 0.2)"
               }}
-              className="transmission-panel p-10 rounded-[3rem] relative group/card shadow-2xl overflow-hidden backdrop-blur-[40px]"
+              className="transmission-panel p-6 sm:p-10 rounded-[2.5rem] sm:rounded-[3rem] relative group/card shadow-2xl overflow-hidden backdrop-blur-[40px]"
             >
               {/* Visible Diagonal Light Sweep */}
               <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden">

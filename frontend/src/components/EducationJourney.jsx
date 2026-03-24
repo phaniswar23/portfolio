@@ -238,7 +238,7 @@ const EducationJourney = () => {
   };
 
   return (
-    <section id="education" ref={containerRef} onMouseMove={handleMouseMove} className="pt-24 pb-12 md:pt-32 md:pb-16 px-4 relative w-full overflow-hidden bg-transparent">
+    <section id="education" ref={containerRef} onMouseMove={handleMouseMove} className="pt-12 pb-32 px-4 relative w-full overflow-hidden bg-transparent">
       <motion.div style={{ x: bgParallaxX, y: bgParallaxY }} className="absolute inset-0 pointer-events-none z-0 bg-parallax-layer">
          <div className="absolute inset-0 bg-gradient-to-b from-[#02030A] via-[#03040B] to-[#02030A]" />
          <GridBackground opacity={0.02} maskEdges={false} />
@@ -255,7 +255,7 @@ const EducationJourney = () => {
             <span className="text-[10px] font-bold uppercase tracking-[0.5em] text-cyan-400">Path of Progression</span>
             <div className="w-16 h-[1px] bg-gradient-to-r from-cyan-500/50 to-transparent" />
           </motion.div>
-          <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} className="text-5xl md:text-7xl font-bold tracking-tight text-white leading-tight">
+          <motion.h2 initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1 }} className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white leading-tight">
             Academic <span className="relative inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-blue-300 italic font-medium">Trajectory.</span>
           </motion.h2>
         </header>

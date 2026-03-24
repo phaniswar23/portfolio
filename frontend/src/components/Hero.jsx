@@ -70,7 +70,7 @@ const Hero = ({ animateIntro }) => {
   return (
     <section
       onMouseMove={handleGlobalMouseMove}
-      className={`relative min-h-[90vh] flex flex-col justify-center pt-16 pb-0 px-8 sm:px-12 md:px-20 max-w-[1600px] mx-auto overflow-hidden text-foreground cursor-default`}
+      className={`relative min-h-screen flex flex-col justify-center pt-20 pb-20 px-4 sm:px-12 md:px-20 max-w-[1600px] mx-auto overflow-hidden text-foreground cursor-default`}
     >
       {/* ── Clean Premium Dark Background System ── */}
       <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden bg-[#020617]">
@@ -156,7 +156,7 @@ const Hero = ({ animateIntro }) => {
             transition={{ duration: 0.75, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className="relative mb-2 select-none"
           >
-            <span className="name-text block">
+            <span className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white leading-[0.85] block">
               Phaniswar
             </span>
           </motion.h1>
@@ -169,7 +169,7 @@ const Hero = ({ animateIntro }) => {
             className="text-xl sm:text-2xl font-medium mb-4 flex flex-wrap items-center gap-x-4 h-10 transition-colors duration-300"
           >
             <span className="text-slate-400 dark:text-gray-500 font-light italic">Building</span>
-            <div className="relative overflow-hidden h-full min-w-[300px] sm:min-w-[360px]">
+            <div className="relative overflow-hidden h-full min-w-[240px] sm:min-w-[360px]">
               <AnimatePresence mode="wait">
                 <motion.span
                   key={capabilities[currentIndex]}

@@ -9,7 +9,7 @@ const Certificates = () => {
   const [selectedCert, setSelectedCert] = useState(null);
 
   return (
-    <div className="certificates-container pt-16 pb-24 px-6 md:px-12 dark:bg-[#020617] transition-colors duration-500 min-h-screen relative">
+    <div className="certificates-container pt-12 pb-32 px-4 md:px-12 dark:bg-[#020617] transition-colors duration-500 min-h-screen relative">
       {/* Background Decorative Elements */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/10 blur-[120px] rounded-full pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-cyan-500/10 blur-[120px] rounded-full pointer-events-none" />
@@ -22,7 +22,7 @@ const Certificates = () => {
           viewport={{ once: true }}
           className="mb-16 text-center"
         >
-          <h2 className="text-5xl md:text-8xl font-black tracking-tighter text-slate-900 dark:text-white leading-tight mb-4">
+          <h2 className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tighter text-slate-900 dark:text-white leading-tight mb-4">
             Certificates<span className="text-cyan-400">.</span>
           </h2>
           <div className="section-header-underline mx-auto mb-6" />
