@@ -66,7 +66,10 @@ const Contact = () => {
     setStatus('loading');
     
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+      // Automatically use localhost for dev and relative path for production (Vercel)
+      const isDev = import.meta.env.DEV;
+      const apiUrl = import.meta.env.VITE_API_URL || (isDev ? 'http://localhost:5001' : '');
+      
       const response = await fetch(`${apiUrl}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
