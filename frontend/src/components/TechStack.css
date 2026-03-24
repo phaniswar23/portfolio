@@ -71,6 +71,7 @@
   opacity: 0.5;
   z-index: 1;
   transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  will-change: transform;
 }
 
 /* Layer: Moving Glows */
@@ -110,6 +111,7 @@
   background: white;
   border-radius: 50%;
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+  will-change: transform, opacity;
 }
 
 /* Interaction Sphere */
@@ -199,7 +201,7 @@
 .skill-card {
   height: 140px;
   background: rgba(13, 19, 33, 0.45);
-  backdrop-filter: blur(16px);
+  backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1.75rem;
   display: flex;

@@ -90,7 +90,7 @@ export const ParticleBackground = ({ color = "cyan-400/20", shadow = "shadow-[0_
   const [particles, setParticles] = useState([]);
   
   useEffect(() => {
-    const newParticles = Array.from({ length: 30 }).map((_, i) => ({
+    const newParticles = Array.from({ length: 12 }).map((_, i) => ({
       id: i,
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
@@ -106,7 +106,7 @@ export const ParticleBackground = ({ color = "cyan-400/20", shadow = "shadow-[0_
       {particles.map(p => (
         <motion.div
           key={p.id}
-          className={`absolute rounded-full bg-cyan-400/20 ${shadow}`}
+          className={`absolute rounded-full bg-cyan-400/20 ${shadow} will-change-transform`}
           style={{ width: p.size, height: p.size, left: p.left, top: p.top }}
           animate={{ y: [0, -150], opacity: [0, 0.4, 0] }}
           transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: "linear" }}

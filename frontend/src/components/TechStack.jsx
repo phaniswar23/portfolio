@@ -39,9 +39,9 @@ const TechStack = () => {
     }));
 
     setParticles({
-      deep: generateParticles(20, [1, 1.5]),
-      mid: generateParticles(15, [1.5, 2.5]),
-      fore: generateParticles(10, [2.5, 4])
+      deep: generateParticles(10, [1, 1.5]),
+      mid: generateParticles(8, [1.5, 2.5]),
+      fore: generateParticles(5, [2.5, 4])
     });
   }, []);
 

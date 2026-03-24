@@ -27,14 +27,15 @@ const ProjectBackground = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
       <style>{`
         .noise-texture {
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-          opacity: 0.03;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='none'/%3E%3C/svg%3E");
+          opacity: 0.01;
           pointer-events: none;
         }
         .premium-glass {
           background: rgba(15, 23, 42, 0.6);
-          backdrop-filter: blur(20px) saturate(180%);
+          backdrop-filter: blur(12px) saturate(180%);
           border: 1px solid rgba(255, 255, 255, 0.1);
+          will-change: transform;
         }
         .dark .premium-glass {
           background: rgba(2, 6, 23, 0.7);

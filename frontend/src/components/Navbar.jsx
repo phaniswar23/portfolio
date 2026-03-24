@@ -91,7 +91,7 @@ const Navbar = () => {
         <motion.nav
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="flex items-center justify-between w-full max-w-[400px] px-6 py-2 rounded-[2.5rem] pointer-events-auto bg-[#050505]/60 backdrop-blur-2xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)]"
+          className="flex items-center justify-between w-full max-w-[400px] px-6 py-2 rounded-[2.5rem] pointer-events-auto bg-[#050505]/60 backdrop-blur-xl border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.5),inset_0_1px_1px_rgba(255,255,255,0.1)]"
         >
           {mobileLinks.map((link) => {
             const isActive = activeSection === link.id;

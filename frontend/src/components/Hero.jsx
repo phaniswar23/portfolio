@@ -97,9 +97,9 @@ const Hero = ({ animateIntro }) => {
           />
         </div>
 
-        {/* 3. Premium Noise Texture (Grain Overlay) */}
-        <div className="absolute inset-0 opacity-[0.04] mix-blend-overlay pointer-events-none" 
-          style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }} 
+        {/* 3. Premium Noise Texture (Optimized) */}
+        <div className="absolute inset-0 opacity-[0.02] mix-blend-overlay pointer-events-none" 
+          style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 0)', backgroundSize: '20px 20px' }} 
         />
         
         {/* 4. Ultra-Subtle Dot Pattern (Apple/Stripe Style) */}
@@ -177,7 +177,7 @@ const Hero = ({ animateIntro }) => {
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -18, opacity: 0 }}
                   transition={{ duration: 0.45, ease: "easeOut" }}
-                  className="absolute left-0 text-transparent bg-clip-text bg-gradient-to-r from-[#6EE7F9] via-[#A78BFA] to-white whitespace-nowrap block font-bold tracking-tight"
+                  className="absolute left-0 text-transparent bg-clip-text bg-gradient-to-r from-[#6EE7F9] via-[#A78BFA] to-white whitespace-nowrap block font-bold tracking-tight will-change-transform"
                 >
                   {capabilities[currentIndex]}
                 </motion.span>
