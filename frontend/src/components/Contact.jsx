@@ -75,7 +75,6 @@ const ReactiveInput = ({ label, name, type = "text", required, value, onChange, 
     setGlobalTyping(true);
     setFocusIntensity(1);
     
-    // Calculate relative position for shader (0 to 1)
     const rect = inputRef.current.getBoundingClientRect();
     setFocusPos({
         x: (rect.left + rect.width / 2) / window.innerWidth,
@@ -94,50 +93,55 @@ const ReactiveInput = ({ label, name, type = "text", required, value, onChange, 
   return (
     <div className="premium-input-container group/field">
       <motion.div
-        className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover/field:opacity-100 transition-opacity duration-500"
+        className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover/field:opacity-100 transition-opacity duration-700"
         style={{
           background: useTransform(
             [mouseX, mouseY],
-            ([x, y]) => `radial-gradient(100px circle at ${x}px ${y}px, rgba(200, 169, 126, 0.08), transparent)`
+            ([x, y]) => `radial-gradient(120px circle at ${x}px ${y}px, rgba(200, 169, 126, 0.12), transparent)`
           )
         }}
       />
-      <InputTag
-        ref={inputRef}
-        type={type}
-        name={name}
-        required={required}
-        value={value}
-        onChange={onChange}
-        onFocus={handleFocus}
-        onBlur={handleBlur}
-        onMouseMove={handleMouseMove}
-        rows={isTextArea ? 4 : undefined}
-        className={`w-full glass-input-slot rounded-2xl px-7 py-5 text-white placeholder-transparent focus:outline-none transition-all duration-500 font-medium relative z-10 glowing-caret placeholder-transition ${isTextArea ? 'resize-none' : ''}`}
-        id={name}
-      />
+      <motion.div
+        whileFocus={{ scale: 1.015 }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className="relative w-full"
+      >
+        <InputTag
+          ref={inputRef}
+          type={type}
+          name={name}
+          required={required}
+          value={value}
+          onChange={onChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onMouseMove={handleMouseMove}
+          rows={isTextArea ? 4 : undefined}
+          className={`w-full glass-input-slot rounded-2xl px-7 py-5 text-white placeholder-transparent focus:outline-none transition-all duration-700 font-medium relative z-10 glowing-caret placeholder-transition ${isTextArea ? 'resize-none' : ''}`}
+          id={name}
+        />
+      </motion.div>
       <div className="input-glow-sweep" />
       <label 
         htmlFor={name}
-        className={`absolute left-7 transition-all duration-400 pointer-events-none tracking-wide text-[10px] font-black z-20 uppercase [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] ${
+        className={`absolute left-7 transition-all duration-500 pointer-events-none tracking-wide text-[10px] font-black z-20 uppercase [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] ${
           isFocused || value 
-          ? '-top-3 text-[#C8A97E] tracking-[0.25em] opacity-100' 
-          : (isTextArea ? 'top-6' : 'top-1/2 -translate-y-1/2') + ' text-[#71717A] opacity-60'
+          ? '-top-3 text-[#C8A97E] tracking-[0.3em] opacity-100' 
+          : (isTextArea ? 'top-6' : 'top-1/2 -translate-y-1/2') + ' text-[#71717A] opacity-40'
         }`}
       >
         {label}
       </label>
       
-      {/* Animated Border Flow on Focus */}
       <AnimatePresence>
         {isFocused && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute inset-0 rounded-2xl border-2 border-transparent"
+            className="absolute inset-0 rounded-2xl border-[0.5px] border-transparent"
             style={{ 
-              borderImage: 'linear-gradient(var(--angle), #C8A97E, transparent) 1',
+              boxShadow: '0 0 30px rgba(200, 169, 126, 0.05)',
             }}
           />
         )}
@@ -158,7 +162,20 @@ const Contact = () => {
   const sectionRef = useRef(null);
   const formRef = useRef(null);
 
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 });
+  const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 });
+
+  const rotateX = useTransform(smoothY, [-500, 500], [5, -5]);
+  const rotateY = useTransform(smoothX, [-500, 500], [-5, 5]);
+
   const handleGlobalMouseMove = (e) => {
+    const x = e.clientX - window.innerWidth / 2;
+    const y = e.clientY - window.innerHeight / 2;
+    mouseX.set(x);
+    mouseY.set(y);
+
     if (formRef.current) {
       const rect = formRef.current.getBoundingClientRect();
       const distance = Math.hypot(
@@ -316,16 +333,32 @@ const Contact = () => {
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0, transition: luxuryTransition }
             }}
+            style={{ 
+              rotateX, 
+              rotateY,
+              perspective: 1000,
+              transformStyle: "preserve-3d"
+            }}
             className="flex justify-center w-full"
           >
             <motion.div 
                ref={formRef}
                whileHover={{ 
-                 boxShadow: "0 80px 150px -30px rgba(0, 0, 0, 1), 0 0 120px rgba(200, 169, 126, 0.2)",
+                 boxShadow: "0 100px 200px -40px rgba(0, 0, 0, 1), 0 0 100px rgba(200, 169, 126, 0.1)",
                }}
-               style={{ transformStyle: "preserve-3d" }}
-               className={`w-full max-w-xl liquid-glass-form-container p-10 sm:p-14 rounded-[3.5rem] relative group/form shadow-2xl transition-all duration-700 ${isNearForm ? 'border-[#C8A97E]/40 scale-[1.01]' : 'border-[#C8A97E]/15'}`}
+               className={`w-full max-w-xl liquid-glass-form-container p-10 sm:p-14 rounded-[3.5rem] relative group/form shadow-2xl transition-all duration-700 ${isNearForm ? 'border-[#C8A97E]/40' : 'border-[#C8A97E]/15'}`}
             >
+              {/* Ambient Floating Light Layer */}
+              <motion.div 
+                animate={{ 
+                  x: [0, 30, -20, 0],
+                  y: [0, -40, 20, 0],
+                  opacity: [0.1, 0.2, 0.1]
+                }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#C8A97E]/15 to-transparent blur-[80px] pointer-events-none rounded-full"
+              />
+
               <div className="surface-streak" />
               <div className="absolute inset-0 bg-gradient-to-br from-[#C8A97E]/[0.05] to-transparent pointer-events-none" />
               
