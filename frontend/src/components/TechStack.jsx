@@ -47,7 +47,6 @@ const TechStack = () => {
 
   return (
     <section 
-      id="tech" 
       className="tech-stack-section pb-36"
       onMouseMove={handleMouseMove}
     >
@@ -55,9 +54,9 @@ const TechStack = () => {
       <div className="tech-atmosphere">
         {/* Layer 1: Base & Glows */}
         <div className="bg-glow-cluster">
-          <div className="glow-orb cyan" />
-          <div className="glow-orb blue" />
-          <div className="glow-orb purple" />
+          <div className="glow-orb gold-1" />
+          <div className="glow-orb gold-2" />
+          <div className="glow-orb platinum" />
         </div>
 
         {/* Layer 2: 3D Grid */}
@@ -117,7 +116,7 @@ const TechStack = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-[10px] font-bold tracking-[0.2em] uppercase mb-6"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D4A373]/10 border border-[#D4A373]/20 text-[#D4A373] text-[10px] font-bold tracking-[0.2em] uppercase mb-6"
           >
             <Sparkles size={12} />
             Tech Ecosystem
@@ -129,7 +128,7 @@ const TechStack = () => {
             viewport={{ once: true }}
             className="text-5xl sm:text-7xl md:text-8xl font-black tracking-tighter text-white leading-none mb-6"
           >
-            Tech <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 italic">Stack.</span>
+            Tech <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#D4A373] to-[#F5F5F7] italic">Stack.</span>
           </motion.h2>
 
           {/* Mode Toggle Switch */}
@@ -189,7 +188,7 @@ const TechStack = () => {
                       setFocusedSkill(null);
                     }}
                     className={`selector-pill ${activeTab === cat.id ? 'active' : ''}`}
-                    style={{ '--accent-color': cat.color, '--accent-color-rgb': '6, 182, 212' }}
+                    style={{ '--accent-color': cat.color, '--accent-color-rgb': '212, 163, 115' }}
                   >
                     {cat.title}
                   </button>
@@ -207,7 +206,7 @@ const TechStack = () => {
               }}
               className={`grid-container ${hoveredSkill ? 'has-focus' : ''}`}
             >
-              <div className="grid-orb" style={{ '--accent-color-rgb': '6, 182, 212' }} />
+              <div className="grid-orb" style={{ '--accent-color-rgb': '212, 163, 115' }} />
               {SKILL_CATEGORIES.map((category) => {
                 const isHoveredCategory = category.rings.some(r => r.skills.some(s => s.name === hoveredSkill));
                 return (
@@ -301,7 +300,7 @@ const OrbitingNode = ({ skill, angle, radius, orbitRotation, isFocused, onClick,
   
   const hexToRgb = (hex) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '6, 182, 212';
+    return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '212, 163, 115';
   };
 
   return (
@@ -354,7 +353,7 @@ const SkillCard = ({ skill, index, hoveredSkill, setHoveredSkill }) => {
   const logoUrl = skill.customUrl || `https://cdn.simpleicons.org/${skill.slug}`;
   const hexToRgb = (hex) => {
     const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '6, 182, 212';
+    return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '212, 163, 115';
   };
 
   const handleMouseMove = (e) => {

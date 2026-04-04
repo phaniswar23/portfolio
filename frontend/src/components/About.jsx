@@ -53,10 +53,10 @@ const About = () => {
 
 
   return (
-    <section id="about" ref={containerRef} className="pt-12 pb-24 px-4 sm:px-12 md:px-24 relative max-w-[1600px] mx-auto overflow-hidden bg-background text-foreground transition-colors duration-500">
-      {/* Dynamic Background Elements */}
-      <motion.div style={{ y: y1 }} className="absolute top-0 right-10 w-96 h-96 bg-[#6EE7F9]/5 blur-[120px] rounded-full -z-10 opacity-0 dark:opacity-100 transition-opacity duration-500" />
-      <motion.div style={{ y: y2 }} className="absolute bottom-40 left-10 w-[500px] h-[500px] bg-[#A78BFA]/5 blur-[140px] rounded-full -z-10 opacity-0 dark:opacity-100 transition-opacity duration-500" />
+    <section ref={containerRef} className="pt-12 pb-24 px-4 sm:px-12 md:px-24 relative max-w-[1600px] mx-auto overflow-hidden bg-background text-foreground transition-colors duration-500">
+      {/* Parallax elements kept for 'controlled variation' but dimmed */}
+      <motion.div style={{ y: y1 }} className="absolute top-0 right-10 w-96 h-96 bg-white/[0.015] blur-[120px] rounded-full -z-10 transition-opacity duration-500" />
+      <motion.div style={{ y: y2 }} className="absolute bottom-40 left-10 w-[500px] h-[500px] bg-white/[0.01] blur-[140px] rounded-full -z-10 transition-opacity duration-500" />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -66,10 +66,10 @@ const About = () => {
         className="mb-16 flex flex-col items-center justify-center text-center mt-0"
       >
         <h2 className="text-4xl sm:text-6xl md:text-9xl font-black tracking-tighter text-foreground leading-[0.85] mb-6 transition-colors duration-300">
-          About <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6EE7F9] via-[#A78BFA] to-white italic drop-shadow-[0_0_30px_rgba(110,231,249,0.2)]">ME.</span>
+          About <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5F5F7] via-[#D4A373] to-[#A1A1AA] italic drop-shadow-[0_0_30px_rgba(212,163,115,0.1)]">ME.</span>
         </h2>
 
-        <div className="w-40 h-[1.5px] bg-gradient-to-r from-transparent via-[#6EE7F9]/30 to-transparent mx-auto" />
+        <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-[#D4A373]/20 to-transparent mx-auto" />
       </motion.div>
 
       <div className="max-w-7xl mx-auto">
@@ -86,13 +86,13 @@ const About = () => {
             <div className="space-y-6">
               <h3 className="text-3xl md:text-5xl font-black text-foreground leading-tight transition-colors duration-300">
               Building Real-World <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#6EE7F9] to-[#A78BFA] italic">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F5F5F7] to-[#D4A373] italic">
                 Solutions.
               </span>
               </h3>
               
-              <p className="text-lg md:text-xl text-slate-600 dark:text-gray-400 leading-relaxed font-medium max-w-lg transition-colors duration-300">
-                I'm <span className="text-foreground font-bold">Phaniswar</span>, a <span className="text-[#6EE7F9] font-semibold">3rd year B.Tech CSE</span> student at <span className="text-foreground font-semibold">LPU</span> and a <span className="text-[#A78BFA] font-semibold">MERN stack developer</span> focused on building scalable web applications.
+              <p className="text-lg md:text-xl text-[#E6E6E8] leading-relaxed font-light max-w-lg transition-colors duration-300">
+                I'm <span className="text-white font-bold">Phaniswar</span>, a <span className="text-[#D4A373] font-semibold">3rd year B.Tech CSE</span> student at <span className="text-white font-semibold">LPU</span> and a <span className="text-[#A1A1AA] font-semibold">MERN stack developer</span> focused on building scalable web applications.
               </p>
             </div>
 
@@ -100,7 +100,7 @@ const About = () => {
 
           {/* RIGHT COLUMN: Interactive Highlights */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 relative">
-             <div className="absolute -inset-4 bg-[#6EE7F9]/5 blur-[100px] rounded-full -z-10 animate-pulse-slow opacity-0 dark:opacity-100 transition-opacity duration-500" />
+             <div className="absolute -inset-4 bg-white/5 blur-[100px] rounded-full -z-10 animate-pulse-slow opacity-0 dark:opacity-100 transition-opacity duration-500" />
              
              {[
                { 
@@ -128,29 +128,27 @@ const About = () => {
                  delay: 0.6
                }
              ].map((card, i) => (
-               <motion.div
-                 key={i}
-                 initial={{ opacity: 0, y: 20 }}
-                 whileInView={{ opacity: 1, y: 0 }}
-                 viewport={{ once: true }}
-                 whileHover={{ y: -6, scale: 1.02 }}
-                 className="p-6 rounded-[2.5rem] bg-card border border-border dark:backdrop-blur-md group hover:border-#6EE7F9/20 transition-all duration-500 relative overflow-hidden shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-premium)] dark:shadow-none dark:hover:shadow-none"
-               >
-                 <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#6EE7F9]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                 <div className="w-12 h-12 rounded-2xl bg-[#6EE7F9]/10 flex items-center justify-center mb-4 group-hover:scale-110 group-hover:bg-[#6EE7F9]/20 transition-all duration-500">
-                   <card.icon className="w-6 h-6 text-[#6EE7F9]" />
-                 </div>
-                 <h4 className="text-lg font-bold text-foreground mb-2 transition-colors duration-300">{card.title}</h4>
-                 <p className="text-xs text-foreground/60 leading-relaxed font-medium transition-colors duration-300">{card.desc}</p>
-               </motion.div>
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  whileHover={{ scale: 1.01 }}
+                  className="p-8 rounded-[2rem] glass transition-all duration-500 relative overflow-hidden"
+                >
+                  <div className="w-12 h-12 rounded-xl bg-white/[0.03] border border-white/[0.05] flex items-center justify-center mb-6 group-hover:bg-[#D4A373]/10 transition-all duration-500">
+                    <card.icon className="w-5 h-5 text-[#D4A373]" />
+                  </div>
+                  <h4 className="text-lg font-bold text-white mb-3 tracking-tight transition-colors duration-300">{card.title}</h4>
+                  <p className="text-xs text-[#E6E6E8] leading-relaxed font-light transition-colors duration-300">{card.desc}</p>
+                </motion.div>
              ))}
           </div>
         </div>
 
         {/* Bottom Stat Bar */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 p-10 rounded-[3rem] bg-card border border-border dark:backdrop-blur-md relative overflow-hidden group shadow-[var(--shadow-premium)] dark:shadow-2xl transition-all duration-500">
-            <div className="absolute inset-0 bg-gradient-to-br from-[#6EE7F9]/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-[#6EE7F9]/[0.03] blur-[100px] -z-10 group-hover:bg-[#6EE7F9]/[0.05] transition-colors" />
+        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 p-12 rounded-[2.5rem] glass relative overflow-hidden group transition-all duration-500">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
            {[
              { label: "Projects Built", value: 2 },
              { label: "Certifications", value: 3 },
@@ -164,11 +162,11 @@ const About = () => {
                transition={{ delay: 0.7 + (i * 0.1) }}
                className="text-center relative z-10"
              >
-               <div className="text-4xl md:text-5xl font-black text-foreground mb-2 tracking-tighter transition-colors duration-300">
+               <div className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tighter transition-colors duration-300">
                  <AnimatedNumber value={stat.value} duration={2000} />+
                </div>
-               <div className="text-[10px] font-bold text-slate-500 dark:text-gray-500 uppercase tracking-[0.3em] transition-colors duration-300">{stat.label}</div>
-               {i < 2 && <div className="hidden md:block absolute top-1/2 -right-4 -translate-y-1/2 w-px h-12 bg-border" />}
+               <div className="text-[10px] font-bold text-[#71717A] uppercase tracking-[0.3em] transition-colors duration-300">{stat.label}</div>
+               {i < 2 && <div className="hidden md:block absolute top-1/2 -right-4 -translate-y-1/2 w-px h-10 bg-white/[0.05]" />}
              </motion.div>
            ))}
         </div>

@@ -17,24 +17,24 @@ export default function Intro3DPro({ onFinish }) {
       exit={{ opacity: 0, y: -60, scale: 1.05, transition: { duration: 0.6, ease: "easeInOut" } }}
     >
       {/* ── Background Layers ── */}
-      <div className="absolute inset-0 bg-[#050505]" />
+      <div className="absolute inset-0 bg-[#0B0B0C]" />
 
-      {/* Primary animated lime orb */}
+      {/* Primary animated gold orb */}
       <motion.div
-        className="absolute top-1/2 left-1/2 w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 bg-[#6EE7F9]/10 blur-[150px] rounded-full"
+        className="absolute top-1/2 left-1/2 w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 bg-[#D4A373]/10 blur-[150px] rounded-full"
         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Secondary lavender orb bottom-right */}
+      {/* Secondary neutral orb bottom-right */}
       <motion.div
-        className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#A78BFA]/10 blur-[120px] rounded-full"
+        className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#A1A1AA]/10 blur-[120px] rounded-full"
         animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.5, 0.2] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
       />
 
       {/* Vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(5,5,5,0.85)_100%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(11,11,12,0.85)_100%)] pointer-events-none" />
 
       {/* ── Typography ── */}
       <motion.div
@@ -45,7 +45,7 @@ export default function Intro3DPro({ onFinish }) {
       >
         {/* Subtle "Welcome to" label */}
         <h2
-          className="text-sm tracking-[0.4em] text-[#6EE7F9]/60 uppercase mb-4 font-medium"
+          className="text-sm tracking-[0.4em] text-[#D4A373]/60 uppercase mb-4 font-medium"
           style={{ fontFamily: "'Inter', sans-serif" }}
         >
           Welcome to
@@ -56,14 +56,14 @@ export default function Intro3DPro({ onFinish }) {
           className="text-7xl md:text-9xl font-extrabold tracking-tight leading-none"
           style={{
             fontFamily: "'Clash Display', 'Inter', sans-serif",
-            textShadow: "0 0 20px rgba(110, 231, 249, 0.2), 0 0 40px rgba(167, 139, 250, 0.15)",
+            textShadow: "0 0 20px rgba(212, 163, 115, 0.2), 0 0 40px rgba(161, 161, 170, 0.15)",
           }}
           initial={{ scale: 0.7, rotateX: 20, filter: "blur(10px)", opacity: 0 }}
           animate={{ scale: 1, rotateX: 0, filter: "blur(0px)", opacity: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
           whileHover={{ scale: 1.02 }}
         >
-          <span className="bg-gradient-to-r from-[#6EE7F9] via-[#A78BFA] to-[#ffffff] bg-clip-text text-transparent">
+          <span className="bg-gradient-to-r from-[#D4A373] via-[#F5F5F7] to-[#A1A1AA] bg-clip-text text-transparent">
             My Portfolio
           </span>
         </motion.h1>

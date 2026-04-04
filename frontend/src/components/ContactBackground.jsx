@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import * as THREE from 'three';
+import * as THREE_LIB from 'three';
 
 const ContactBackground = () => {
   const containerRef = useRef(null);
@@ -12,12 +12,12 @@ const ContactBackground = () => {
     let frameId = null;
 
     // --- SCENE SETUP ---
-    const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x02030a);
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+    const scene = new THREE_LIB.Scene();
+    scene.background = new THREE_LIB.Color(0x0B0B0C);
+    const camera = new THREE_LIB.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
     camera.position.z = 800;
 
-    const renderer = new THREE.WebGLRenderer({ 
+    const renderer = new THREE_LIB.WebGLRenderer({ 
       antialias: true, 
       powerPreference: "high-performance",
       alpha: true
@@ -43,55 +43,55 @@ const ContactBackground = () => {
       });
     }
 
-    const particleGeometry = new THREE.BufferGeometry();
-    particleGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particleGeometry = new THREE_LIB.BufferGeometry();
+    particleGeometry.setAttribute('position', new THREE_LIB.BufferAttribute(positions, 3));
 
-    const particleMaterial = new THREE.PointsMaterial({
-      color: 0x6ee7f9,
+    const particleMaterial = new THREE_LIB.PointsMaterial({
+      color: 0xD4A373,
       size: 2,
       transparent: true,
       opacity: 0.6,
-      blending: THREE.AdditiveBlending
+      blending: THREE_LIB.AdditiveBlending
     });
 
-    const particleSystem = new THREE.Points(particleGeometry, particleMaterial);
+    const particleSystem = new THREE_LIB.Points(particleGeometry, particleMaterial);
     scene.add(particleSystem);
 
     // --- 3D GROUND PLANE ---
-    const planeGeometry = new THREE.PlaneGeometry(3000, 3000, 30, 30);
-    const planeMaterial = new THREE.MeshBasicMaterial({
-      color: 0x6ee7f9,
+    const planeGeometry = new THREE_LIB.PlaneGeometry(3000, 3000, 30, 30);
+    const planeMaterial = new THREE_LIB.MeshBasicMaterial({
+      color: 0xA1A1AA,
       wireframe: true,
       transparent: true,
       opacity: 0.03,
-      side: THREE.DoubleSide
+      side: THREE_LIB.DoubleSide
     });
-    const groundPlane = new THREE.Mesh(planeGeometry, planeMaterial);
+    const groundPlane = new THREE_LIB.Mesh(planeGeometry, planeMaterial);
     groundPlane.rotation.x = Math.PI / 2.5;
     groundPlane.position.y = -600;
     scene.add(groundPlane);
 
     // --- LIGHTING ---
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+    const ambientLight = new THREE_LIB.AmbientLight(0xffffff, 0.15);
     scene.add(ambientLight);
 
-    const cyanLight = new THREE.PointLight(0x06b6d4, 1, 1500);
-    cyanLight.position.set(-500, 500, 200);
-    scene.add(cyanLight);
+    const goldLight = new THREE_LIB.PointLight(0xD4A373, 1.2, 1500);
+    goldLight.position.set(-500, 500, 200);
+    scene.add(goldLight);
 
     // --- DYNAMIC CONNECTIONS ---
     const maxLines = 600;
-    const lineGeometry = new THREE.BufferGeometry();
+    const lineGeometry = new THREE_LIB.BufferGeometry();
     const linePositions = new Float32Array(maxLines * 6);
-    lineGeometry.setAttribute('position', new THREE.BufferAttribute(linePositions, 3));
+    lineGeometry.setAttribute('position', new THREE_LIB.BufferAttribute(linePositions, 3));
     
-    const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0x6ee7f9,
+    const lineMaterial = new THREE_LIB.LineBasicMaterial({
+      color: 0xD4A373,
       transparent: true,
       opacity: 0.1,
-      blending: THREE.AdditiveBlending
+      blending: THREE_LIB.AdditiveBlending
     });
-    const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+    const lines = new THREE_LIB.LineSegments(lineGeometry, lineMaterial);
     scene.add(lines);
 
     // --- INTERACTION ---
@@ -186,7 +186,7 @@ const ContactBackground = () => {
 
   return (
     <div ref={containerRef} className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)] opacity-60" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.6)_100%)] opacity-80" />
     </div>
   );
 };

@@ -19,27 +19,16 @@ const ProjectBackground = () => {
   const parallaxY = useSpring(useTransform(mouseY, [-0.5, 0.5], [-20, 20]), { damping: 50, stiffness: 200 });
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 opacity-40">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0 opacity-20">
       <motion.div 
         style={{ x: parallaxX, y: parallaxY }}
-        className="absolute inset-[-10%] bg-[radial-gradient(circle_at_center,#6EE7F915_1px,transparent_1px)] [background-size:40px_40px] [mask-image:radial-gradient(ellipse_at_center,black_70%,transparent_100%)]"
+        className="absolute inset-[-10%] bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.03)_1px,transparent_1px)] [background-size:60px_60px] [mask-image:radial-gradient(ellipse_at_center,black_70%,transparent_100%)]"
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background" />
       <style>{`
         .noise-texture {
           background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='none'/%3E%3C/svg%3E");
           opacity: 0.01;
           pointer-events: none;
-        }
-        .premium-glass {
-          background: rgba(15, 23, 42, 0.6);
-          backdrop-filter: blur(12px) saturate(180%);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          will-change: transform;
-        }
-        .dark .premium-glass {
-          background: rgba(2, 6, 23, 0.7);
-          border: 1px solid rgba(110, 231, 249, 0.05);
         }
         .text-reveal-mask {
           mask-image: linear-gradient(to right, black, black 50%, transparent);
@@ -50,15 +39,10 @@ const ProjectBackground = () => {
         .group:hover .text-reveal-mask {
           mask-position: 0 0;
         }
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
       `}</style>
     </div>
   );
 };
-
 
 const projects = [
   {
@@ -70,7 +54,7 @@ const projects = [
     tags: ['MERN', 'Socket.io', 'Tailwind'],
     github: 'https://github.com/Balaji-Sri-Ram/CodeConnect',
     live: 'https://code-connect-sand-eta.vercel.app/',
-    accent: '#6EE7F9', // Cyan
+    accent: '#D4A373', // Gold
     icon: Globe,
     isFeatured: true
   },
@@ -82,7 +66,7 @@ const projects = [
     video: 'https://assets.mixkit.co/videos/preview/mixkit-drone-view-of-a-field-of-crops-15965-large.mp4',
     tags: ['PHP', 'Tailwind CSS', 'MySQL'],
     github: 'https://github.com/phaniswar23/AGRITREK-PROJECT',
-    accent: '#10B981', // Emerald/Green
+    accent: '#A1A1AA', // Silver/Neutral
     icon: Database
   },
   {
@@ -91,16 +75,13 @@ const projects = [
     description: 'A real-time multiplayer word game built using MERN stack with interactive gameplay.',
     image: '/wordimposter_preview.png',
     video: 'https://assets.mixkit.co/videos/preview/mixkit-set-of-dice-rolling-on-a-table-34440-large.mp4',
-
     tags: ['MERN', 'Socket.io', 'Express'],
     github: 'https://github.com/phaniswar23/nodeproj',
     live: 'https://wordimpostergame.vercel.app/',
-    accent: '#A78BFA', // Purple/Indigo
+    accent: '#D4A373', // Gold
     icon: Zap
   }
 ];
-
-
 
 const ProjectCard = ({ project, index }) => {
   const cardRef = useRef(null);
@@ -160,13 +141,15 @@ const ProjectCard = ({ project, index }) => {
       className="group relative w-full h-[540px] will-change-transform"
     >
       {/* ── Ambient Glow ── */}
-      <div className={`absolute -inset-10 bg-[radial-gradient(circle_at_center,#6EE7F90a_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -z-20`} />
+      <div className={`absolute -inset-10 bg-[radial-gradient(circle_at_center,rgba(212,163,115,0.05)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 -z-20`} />
       
       {/* ── Gradient Border ── */}
-      <div className={`absolute -inset-[1px] rounded-[2.5rem] opacity-20 group-hover:opacity-100 blur-[2px] transition-all duration-700 -z-10 bg-gradient-to-tr from-cyan-500 via-purple-500 to-blue-500`} />
+      <div className={`absolute -inset-[1px] rounded-[2.5rem] opacity-0 group-hover:opacity-40 blur-[1px] transition-all duration-700 -z-10 bg-gradient-to-tr from-white/20 via-white/10 to-transparent`} />
 
-      <div className="h-full rounded-[2.5rem] overflow-hidden flex flex-col premium-glass shadow-2xl transition-all duration-500 relative">
+      <div className="h-full rounded-[2.5rem] overflow-hidden flex flex-col glass shadow-2xl transition-all duration-500 relative">
         <div className="absolute inset-0 noise-texture" />
+        
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent z-40 pointer-events-none" />
         
         {/* ── Cursor Follow Light ── */}
         <motion.div 
@@ -174,15 +157,14 @@ const ProjectCard = ({ project, index }) => {
           style={{
             background: useTransform(
               [mouseX, mouseY],
-              ([x, y]) => `radial-gradient(600px circle at ${x * 100}% ${y * 100}%, rgba(110, 231, 249, 0.08), transparent 40%)`
+              ([x, y]) => `radial-gradient(400px circle at ${x * 100}% ${y * 100}%, rgba(255, 255, 255, 0.03), transparent 40%)`
             )
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.03] to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent pointer-events-none" />
 
         {/* ── Visual Engine ── */}
-        <div className="w-full h-64 relative overflow-hidden bg-slate-900/50">
-           {/* Color Tint & Back-Glow */}
+        <div className="w-full h-64 relative overflow-hidden bg-[#121214]/50">
            <div 
              className="absolute inset-x-0 bottom-0 h-1/2 opacity-30 z-10 pointer-events-none transition-gpu"
              style={{ background: `radial-gradient(circle at bottom, ${project.accent}22, transparent 70%)` }}
@@ -198,14 +180,8 @@ const ProjectCard = ({ project, index }) => {
              className="absolute inset-0"
            >
              <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-gpu" />
-             
-             {/* Readability Gradient Overlay */}
-             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-950/20 to-slate-950/90 z-20 pointer-events-none" />
-             
-             {/* Micro Noise Overlay */}
+             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0B0B0C]/20 to-[#0B0B0C]/90 z-20 pointer-events-none" />
              <div className="absolute inset-0 noise-texture opacity-[0.15] z-30 pointer-events-none" />
-             
-             {/* Focus Effect (Sharpen subject area) */}
              <div className={`absolute inset-0 z-40 transition-opacity duration-1000 ${isHovered ? 'opacity-100' : 'opacity-0'}`}>
                 <div className="absolute inset-0 [mask-image:radial-gradient(circle_at_center,black_30%,transparent_70%)] pointer-events-none">
                    <img src={project.image} alt={project.title} className="w-full h-full object-cover scale-[1.08]" />
@@ -214,7 +190,6 @@ const ProjectCard = ({ project, index }) => {
            </motion.div>
            
            <AnimatePresence>
-
              {project.video && isSectionInView && (
                <motion.div 
                  initial={{ opacity: 0 }}
@@ -231,7 +206,7 @@ const ProjectCard = ({ project, index }) => {
                    playsInline
                    className="w-full h-full object-cover"
                  />
-                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
+                 <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0C] via-transparent to-transparent" />
                </motion.div>
              )}
            </AnimatePresence>
@@ -245,30 +220,28 @@ const ProjectCard = ({ project, index }) => {
               </div>
            </div>
            
-           {/* Inner Shadow Shadow */}
-           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950 to-transparent z-40 pointer-events-none opacity-80" />
+           <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0B0B0C] to-transparent z-40 pointer-events-none opacity-80" />
         </div>
-
 
         {/* ── Content Matrix ── */}
         <div className="flex-1 p-8 flex flex-col relative z-30">
            <div style={{ transform: 'translateZ(40px)' }} className="flex flex-col h-full">
               <div className="flex items-center gap-3 mb-4">
-                 <h3 className="text-2xl font-black text-white tracking-[0.02em] group-hover:text-cyan-400 transition-colors duration-500">
+                 <h3 className="text-2xl font-black text-white tracking-[0.02em] group-hover:text-[#D4A373] transition-colors duration-500">
                    {project.title}
                  </h3>
               </div>
 
-              <p className="text-white/60 text-xs leading-relaxed mb-8 font-medium line-clamp-2 text-reveal-mask">
+              <p className="text-[#E6E6E8] text-xs leading-relaxed mb-8 font-light line-clamp-2 text-reveal-mask">
                  {project.description}
               </p>
 
               <div className="flex flex-wrap gap-2 mb-8">
-                 {project.tags.map(tag => (
-                   <span key={tag} className="px-3 py-1.5 rounded-full text-[9px] font-bold text-white/50 border border-white/10 bg-white/5 uppercase tracking-widest hover:border-cyan-500/50 hover:text-cyan-400 transition-all duration-300">
-                     {tag}
-                   </span>
-                 ))}
+                  {project.tags.map(tag => (
+                    <span key={tag} className="px-3 py-1.5 rounded-full text-[9px] font-bold text-[#A1A1AA] border border-white/[0.05] bg-white/[0.01] uppercase tracking-widest hover:border-[#D4A373]/30 hover:text-[#D4A373] transition-all duration-300">
+                      {tag}
+                    </span>
+                  ))}
               </div>
 
               <div className="mt-auto flex items-center gap-4">
@@ -278,7 +251,7 @@ const ProjectCard = ({ project, index }) => {
                      target="_blank"
                      whileHover={{ scale: 1.05, y: -2 }}
                      whileTap={{ scale: 0.95 }}
-                     className="relative overflow-hidden group/btn bg-cyan-500 text-slate-900 text-[10px] font-black px-6 py-4 rounded-xl flex items-center justify-center gap-2 flex-1 shadow-[0_10px_20px_-10px_rgba(110,231,249,0.5)] transition-all"
+                     className="relative overflow-hidden group/btn bg-[#D4A373] text-[#0B0B0C] text-[10px] font-black px-6 py-4 rounded-xl flex items-center justify-center gap-2 flex-1 shadow-[0_10px_20px_-10px_rgba(212,163,115,0.4)] transition-all"
                    >
                      <span className="relative z-10 flex items-center gap-2">
                        LIVE PREVIEW <ExternalLink size={14} className="group-hover/btn:translate-x-1 transition-transform" />
@@ -304,10 +277,9 @@ const ProjectCard = ({ project, index }) => {
   );
 };
 
-
 const Projects = () => {
   return (
-    <section id="projects" className="pt-12 pb-32 px-4 sm:px-8 md:px-12 relative w-full overflow-hidden bg-slate-950 text-foreground cursor-default transition-colors duration-500">
+    <section className="pt-12 pb-32 px-4 sm:px-8 md:px-12 relative w-full overflow-hidden bg-[#0B0B0C] text-foreground cursor-default transition-colors duration-500">
       <ProjectBackground />
       
       <div className="max-w-[1400px] mx-auto relative z-10">
@@ -319,14 +291,13 @@ const Projects = () => {
               transition={{ duration: 0.6 }}
             >
               <h2 className="text-6xl sm:text-8xl md:text-[10rem] font-black tracking-tighter text-white leading-[0.8] mb-8">
-                 Projects<span className="text-cyan-400">.</span>
+                 Projects<span className="text-white/10">.</span>
               </h2>
 
-              <div className="w-32 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent mx-auto opacity-50" />
+              <div className="w-32 h-1 bg-gradient-to-r from-transparent via-[#D4A373] to-transparent mx-auto opacity-50" />
             </motion.div>
         </header>
 
-        {/* ── Main Grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           {projects.map((project, index) => (
             <ProjectCard key={project.title} project={project} index={index} />
@@ -336,6 +307,5 @@ const Projects = () => {
     </section>
   );
 };
-
 
 export default Projects;

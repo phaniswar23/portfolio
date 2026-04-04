@@ -38,8 +38,8 @@ const platforms = [
     statsSuffix: 'Solved',
     logo: <PlatformLogos.LeetCode />,
     url: 'https://leetcode.com/u/phaniswar1207/',
-    color: '#FFA116',
-    glow: 'rgba(255, 161, 22, 0.5)',
+    color: '#D4A373',
+    glow: 'rgba(212, 163, 115, 0.4)',
     theme: 'lc-hero',
     data: { easy: 45, medium: 51, hard: 4, total: 100, trend: [20, 35, 25, 45, 40, 60, 55, 75, 70, 90, 85, 100] }
   },
@@ -51,8 +51,8 @@ const platforms = [
     statsSuffix: 'Rating',
     logo: <PlatformLogos.Codeforces />,
     url: 'https://codeforces.com/profile/phaniswar99',
-    color: '#3B82F6',
-    glow: 'rgba(59, 130, 246, 0.5)',
+    color: '#A1A1AA',
+    glow: 'rgba(161, 161, 170, 0.4)',
     theme: 'cf-analytics',
     data: { solved: 6, streak: 2, ratingPct: 77, trend: [1200, 1250, 1320, 1300, 1380, 1450, 1420, 1500, 1480, 1540] }
   },
@@ -64,14 +64,14 @@ const platforms = [
     statsSuffix: 'Stars',
     logo: <PlatformLogos.HackerRank />,
     url: 'https://www.hackerrank.com/profile/phaniswarjanyav1',
-    color: '#00EA64',
-    glow: 'rgba(0, 234, 100, 0.5)',
+    color: '#D4A373',
+    glow: 'rgba(212, 163, 115, 0.4)',
     theme: 'hr-skills',
     data: { 
       skills: [
-        { name: 'C++', stars: 4, type: 'Silver', color: 'text-cyan-300' },
-        { name: 'Java', stars: 4, type: 'Silver', color: 'text-cyan-300' },
-        { name: 'SQL', stars: 1, type: 'Bronze', color: 'text-purple-300' }
+        { name: 'C++', stars: 4, type: 'Silver', color: '#A1A1AA' },
+        { name: 'Java', stars: 4, type: 'Silver', color: '#A1A1AA' },
+        { name: 'SQL', stars: 1, type: 'Bronze', color: '#B08D57' }
       ],
       trend: [1, 2, 2, 3, 3, 4, 4, 5, 5, 5]
     }
@@ -84,8 +84,8 @@ const platforms = [
     statsSuffix: 'Score',
     logo: <PlatformLogos.GeeksforGeeks />,
     url: 'https://www.geeksforgeeks.org/profile/phaniswar123',
-    color: '#2F8D46',
-    glow: 'rgba(47, 141, 70, 0.5)',
+    color: '#F5F5F7',
+    glow: 'rgba(245, 245, 247, 0.4)',
     theme: 'gfg-dashboard',
     data: { score: 132, solved: 55, rank: 8360, trend: [30, 50, 45, 75, 65, 90, 85, 110, 132] }
   }
@@ -187,41 +187,41 @@ const MultiRadialRing = ({ easy, medium, hard, total, isHovered }) => {
          </defs>
          <circle cx="50" cy="50" r={r} stroke="currentColor" strokeWidth="10" fill="transparent" className="text-white/[0.04]" />
          <motion.circle
-           cx="50" cy="50" r={r} stroke="#10B981" strokeWidth="10" fill="transparent" strokeDasharray={circ}
+           cx="50" cy="50" r={r} stroke="#D4A373" strokeWidth="10" fill="transparent" strokeDasharray={circ}
            initial={{ strokeDashoffset: circ }} whileInView={{ strokeDashoffset: circ - (easyP / 100) * circ }}
            transition={{ duration: 2, ease: "circOut" }} strokeLinecap="round"
            filter="url(#glow)"
          />
          {/* Glow Trail Tip */}
          <motion.circle
-           cx="50" cy="50" r={r} stroke="#10B981" strokeWidth="12" fill="transparent" strokeDasharray="0.1 1000"
+           cx="50" cy="50" r={r} stroke="#D4A373" strokeWidth="12" fill="transparent" strokeDasharray="0.1 1000"
            initial={{ strokeDashoffset: circ }} whileInView={{ strokeDashoffset: circ - (easyP / 100) * circ }}
            transition={{ duration: 2, ease: "circOut" }} strokeLinecap="round"
            filter="blur(4px)"
          />
          <motion.circle
-           cx="50" cy="50" r={r} stroke="#3B82F6" strokeWidth="10" fill="transparent" strokeDasharray={circ}
+           cx="50" cy="50" r={r} stroke="#A1A1AA" strokeWidth="10" fill="transparent" strokeDasharray={circ}
            initial={{ strokeDashoffset: circ }} whileInView={{ strokeDashoffset: circ - (mediumP / 100) * circ }}
            transition={{ duration: 2, delay: 0.3, ease: "circOut" }} strokeLinecap="round"
            style={{ rotate: (easyP / 100) * 360 + gap, transformOrigin: '50% 50%' }}
            filter="url(#glow)"
          />
          <motion.circle
-           cx="50" cy="50" r={r} stroke="#3B82F6" strokeWidth="12" fill="transparent" strokeDasharray="0.1 1000"
+           cx="50" cy="50" r={r} stroke="#A1A1AA" strokeWidth="12" fill="transparent" strokeDasharray="0.1 1000"
            initial={{ strokeDashoffset: circ }} whileInView={{ strokeDashoffset: circ - (mediumP / 100) * circ }}
            transition={{ duration: 2, delay: 0.3, ease: "circOut" }} strokeLinecap="round"
            style={{ rotate: (easyP / 100) * 360 + gap, transformOrigin: '50% 50%' }}
            filter="blur(4px)"
          />
          <motion.circle
-           cx="50" cy="50" r={r} stroke="#F97316" strokeWidth="10" fill="transparent" strokeDasharray={circ}
+           cx="50" cy="50" r={r} stroke="#F5F5F7" strokeWidth="10" fill="transparent" strokeDasharray={circ}
            initial={{ strokeDashoffset: circ }} whileInView={{ strokeDashoffset: circ - (hardP / 100) * circ }}
            transition={{ duration: 2, delay: 0.6, ease: "circOut" }} strokeLinecap="round"
            style={{ rotate: ((easyP + mediumP) / 100) * 360 + gap * 2, transformOrigin: '50% 50%' }}
            filter="url(#glow)"
          />
          <motion.circle
-           cx="50" cy="50" r={r} stroke="#F97316" strokeWidth="12" fill="transparent" strokeDasharray="0.1 1000"
+           cx="50" cy="50" r={r} stroke="#F5F5F7" strokeWidth="12" fill="transparent" strokeDasharray="0.1 1000"
            initial={{ strokeDashoffset: circ }} whileInView={{ strokeDashoffset: circ - (hardP / 100) * circ }}
            transition={{ duration: 2, delay: 0.6, ease: "circOut" }} strokeLinecap="round"
            style={{ rotate: ((easyP + mediumP) / 100) * 360 + gap * 2, transformOrigin: '50% 50%' }}
@@ -245,9 +245,9 @@ const LeetCodeHero = ({ data, isHovered }) => (
     <MultiRadialRing {...data} isHovered={isHovered} />
     <div className="flex gap-8 mt-8">
        {[
-         { label: 'EASY', val: data.easy, color: 'bg-emerald-500' },
-         { label: 'MEDIUM', val: data.medium, color: 'bg-blue-500' },
-         { label: 'HARD', val: data.hard, color: 'bg-orange-500' }
+         { label: 'EASY', val: data.easy, color: 'bg-[#D4A373]' },
+         { label: 'MEDIUM', val: data.medium, color: 'bg-[#A1A1AA]' },
+         { label: 'HARD', val: data.hard, color: 'bg-[#F5F5F7]' }
        ].map(s => (
          <div key={s.label} className="flex flex-col items-center gap-1.5">
             <div className={`w-1.5 h-1.5 rounded-full ${s.color} shadow-lg`} />
@@ -263,14 +263,14 @@ const CodeforcesAnalytics = ({ data, isHovered }) => (
   <div className="w-full flex flex-col gap-6 py-4">
     <div className="flex items-center justify-between px-2">
        <div className="flex flex-col">
-          <span className="text-2xl font-bold text-blue-400">{data.ratingPct}%</span>
+          <span className="text-2xl font-bold text-[#A1A1AA]">{data.ratingPct}%</span>
           <span className="text-[10px] font-black uppercase tracking-widest text-white/30">Top Percentile</span>
        </div>
        <div className="w-12 h-12 flex items-center justify-center rounded-2xl bg-white/[0.03] border border-white/5">
-          <Activity className="w-6 h-6 text-blue-400" />
+          <Activity className="w-6 h-6 text-[#A1A1AA]" />
        </div>
     </div>
-    <SignatureSparkline data={data.trend} color="#3B82F6" isHovered={isHovered} />
+    <SignatureSparkline data={data.trend} color="#A1A1AA" isHovered={isHovered} />
   </div>
 );
 
@@ -282,14 +282,14 @@ const HackerRankSkills = ({ data }) => (
              <span>{s.name} Proficiency</span>
              <div className="flex gap-1">
                 {[...Array(5)].map((_, j) => (
-                  <span key={j} className={`text-[10px] ${j < s.stars ? s.color : 'text-white/5'}`}>★</span>
+                   <span key={j} className="text-[10px]" style={{ color: j < s.stars ? s.color : 'rgba(255,255,255,0.05)' }}>★</span>
                 ))}
              </div>
           </div>
           <div className="h-1.5 w-full bg-white/[0.05] rounded-full overflow-hidden relative">
              <motion.div 
                initial={{ width: 0 }} whileInView={{ width: `${(s.stars / 5) * 100}%` }} transition={{ duration: 2, delay: 0.1 * i, ease: "circOut" }}
-               className="h-full bg-emerald-500 relative" style={{ backgroundColor: s.color === 'text-cyan-300' ? '#22d3ee' : '#a855f7' }}
+               className="h-full relative" style={{ backgroundColor: s.color }}
              >
                 <motion.div 
                   animate={{ x: ['-100%', '100%'] }} 
@@ -317,7 +317,7 @@ const GFGStats = ({ data, isHovered }) => (
           </div>
         ))}
      </div>
-     <SignatureSparkline data={data.trend} color="#2F8D46" isHovered={isHovered} />
+     <SignatureSparkline data={data.trend} color="#F5F5F7" isHovered={isHovered} />
   </div>
 );
 
@@ -360,9 +360,9 @@ const SignatureCard = ({ platform, index }) => {
         onMouseEnter={() => setIsHovered(true)} 
         onMouseLeave={() => { setIsHovered(false); x.set(0.5); y.set(0.5); }}
 
-        whileHover={{ scale: 1.02, y: -8 }}
+        whileHover={{ scale: 1.01, y: -4 }}
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
-        className="relative flex flex-col justify-between w-full min-h-[400px] md:min-h-[540px] p-8 md:p-12 rounded-[32px] md:rounded-[40px] bg-white/[0.03] backdrop-blur-[40px] border border-white/[0.08] overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.5)] transition-all duration-500"
+        className="relative flex flex-col justify-between w-full min-h-[400px] md:min-h-[540px] p-8 md:p-12 rounded-[2.5rem] glass overflow-hidden group shadow-2xl transition-all duration-500"
       >
         {/* Animated Gradient Border */}
         <motion.div 
@@ -453,7 +453,7 @@ const SignatureCard = ({ platform, index }) => {
 
            <div>
               <h3 className="text-2xl font-bold text-white tracking-tight">{platform.name}</h3>
-              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/20">{platform.username}</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.3em] text-[#71717A]">{platform.username}</span>
            </div>
         </div>
 
@@ -485,12 +485,11 @@ const CodingPlatforms = () => {
   const mouseY = useMotionValue(0);
 
   return (
-    <section 
-      id="coding" ref={containerRef} onMouseMove={(e) => {
+    <section ref={containerRef} onMouseMove={(e) => {
         const r = containerRef.current?.getBoundingClientRect();
         if (r) { mouseX.set(e.clientX - r.left); mouseY.set(e.clientY - r.top); }
       }}
-      className="pt-12 pb-40 px-4 md:px-8 bg-[#020306] relative overflow-hidden flex flex-col items-center border-t border-white/[0.02]"
+      className="pt-12 pb-40 px-4 md:px-8 bg-transparent relative overflow-hidden flex flex-col items-center border-t border-white/[0.02]"
     >
       {/* Dynamic Cursor Spotlight */}
       <motion.div 
@@ -498,7 +497,7 @@ const CodingPlatforms = () => {
         style={{ 
           background: useTransform(
             [mouseX, mouseY], 
-            ([x, y]) => `radial-gradient(1000px circle at ${x}px ${y}px, rgba(255,255,255,0.015), transparent 80%)`
+            ([x, y]) => `radial-gradient(1000px circle at ${x}px ${y}px, rgba(255,255,255,0.01), transparent 70%)`
           )
         }}
       />
@@ -551,21 +550,21 @@ const CodingPlatforms = () => {
           }
         `}} />
 
-        <div className="absolute top-[10%] left-[10%] w-[30%] h-[30%] bg-blue-600/10 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[10%] right-[10%] w-[30%] h-[30%] bg-emerald-600/10 blur-[120px] rounded-full" />
+        <div className="absolute top-[10%] left-[10%] w-[30%] h-[30%] bg-[#D4A373]/5 blur-[120px] rounded-full" />
+        <div className="absolute bottom-[10%] right-[10%] w-[30%] h-[30%] bg-[#A1A1AA]/5 blur-[120px] rounded-full" />
       </div>
 
 
       <div className="w-full max-w-[1500px] relative z-10 mx-auto">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1 }} className="mb-24 md:mb-32 text-center max-w-4xl mx-auto px-6">
            <div className="inline-flex items-center gap-2 py-1.5 px-5 rounded-full bg-white/[0.04] border border-white/10 mb-8 backdrop-blur-3xl shadow-xl">
-              <Activity className="w-4 h-4 text-emerald-400" />
+              <Activity className="w-4 h-4 text-[#D4A373]" />
               <span className="text-[9px] font-black uppercase tracking-[0.4em] text-white/50">Competitive Intelligence</span>
            </div>
-           <h2 className="text-4xl sm:text-6xl md:text-8xl font-bold text-white tracking-tightest mb-8 leading-none">
+           <h2 className="text-4xl sm:text-6xl md:text-8xl font-black text-white tracking-tightest mb-8 leading-none">
              Coding Profiles
            </h2>
-           <p className="text-white/30 max-w-3xl mx-auto text-xl font-bold font-mono tracking-tighter leading-relaxed italic border-l-2 border-emerald-500/20 pl-8 text-left">
+           <p className="text-[#E6E6E8] max-w-3xl mx-auto text-xl font-light tracking-tighter leading-relaxed italic border-l-2 border-[#D4A373]/20 pl-8 text-left">
              A high-fidelity visualization of algorithmic proficiency and technical problem-solving metrics.
            </p>
         </motion.div>

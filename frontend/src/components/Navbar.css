@@ -1,0 +1,166 @@
+/* Minimalist Glass Navbar System (SUB-PIXEL BUBBLE ALIGNMENT FIX) */
+
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.035);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --bubble-bg: rgba(212, 163, 115, 0.08);
+  --navbar-height: 52px;
+  --transition-speed: 0.5s;
+  --transition-ease: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.navbar-container {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.navbar-wrapper {
+  pointer-events: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  padding: 0 8px;
+  height: var(--navbar-height);
+  box-shadow: 
+    0 10px 40px -10px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.05); /* Precision top light */
+}
+/* Liquid refraction highlight */
+.navbar-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+  pointer-events: none;
+}
+
+/* 3) NAV CONTAINER (Relative Reference) */
+.nav-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+/* 4) Sub-pixel Bubble Indicator */
+.nav-bubble {
+  position: absolute;
+  inset: 7px 0;
+  width: 100%;
+  background: var(--bubble-bg);
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+  border: 1px solid rgba(212, 163, 115, 0.25);
+  border-radius: 999px;
+  z-index: -1;
+  pointer-events: none;
+  box-shadow: 
+    0 10px 40px -10px rgba(0, 0, 0, 0.4),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -1px 2px 0 rgba(0, 0, 0, 0.1);
+  will-change: transform, width, opacity;
+}
+
+.nav-bubble::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  pointer-events: none;
+}
+
+/* 5) Nav Link Styles */
+.nav-link {
+  position: relative;
+  height: 100%;
+  padding: 0 16px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #A1A1AA;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-link:hover {
+  color: #D4A373;
+  transform: translateY(-1px);
+}
+
+.nav-link.active {
+  color: #FFFFFF !important;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+}
+
+/* 6) Responsive Adjustments */
+@media (max-width: 1024px) {
+  .navbar-glass {
+    top: 12px;
+    padding: 0 12px;
+  }
+  
+  .navbar-hero {
+    padding: 0 24px;
+    height: 64px;
+  }
+
+  .nav-link {
+    padding: 0 10px;
+    font-size: 10px;
+  }
+}
+
+/* Mobile Menu Overlay - Minimalist */
+.mobile-menu-overlay {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(11, 11, 12, 0.98);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  margin-top: 8px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+}
+
+.mobile-nav-link {
+  padding: 14px 20px;
+  border-radius: 12px;
+  color: #A1A1AA;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mobile-nav-link.active {
+  background: rgba(255, 255, 255, 0.035);
+  color: #D4A373;
+}
