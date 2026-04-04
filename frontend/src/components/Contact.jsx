@@ -58,34 +58,18 @@ const MagneticIcon = ({ Icon, href }) => {
   );
 };
 
-const ReactiveInput = ({ label, name, type = "text", required, value, onChange, isTextArea, setGlobalTyping, setFocusPos, setFocusIntensity }) => {
+const ReactiveInput = ({ label, name, type = "text", required, value, onChange, isTextArea, setGlobalTyping }) => {
   const [isFocused, setIsFocused] = useState(false);
   const inputRef = useRef(null);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const handleMouseMove = (e) => {
-    const rect = inputRef.current.getBoundingClientRect();
-    mouseX.set(e.clientX - rect.left);
-    mouseY.set(e.clientY - rect.top);
-  };
 
   const handleFocus = () => {
     setIsFocused(true);
     setGlobalTyping(true);
-    setFocusIntensity(1);
-    
-    const rect = inputRef.current.getBoundingClientRect();
-    setFocusPos({
-        x: (rect.left + rect.width / 2) / window.innerWidth,
-        y: (rect.top + rect.height / 2) / window.innerHeight
-    });
   };
 
   const handleBlur = () => {
     setIsFocused(false);
     setGlobalTyping(false);
-    setFocusIntensity(0);
   };
 
   const InputTag = isTextArea ? "textarea" : "input";
@@ -93,17 +77,8 @@ const ReactiveInput = ({ label, name, type = "text", required, value, onChange, 
   return (
     <div className="premium-input-container group/field">
       <motion.div
-        className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover/field:opacity-100 transition-opacity duration-700"
-        style={{
-          background: useTransform(
-            [mouseX, mouseY],
-            ([x, y]) => `radial-gradient(120px circle at ${x}px ${y}px, rgba(200, 169, 126, 0.12), transparent)`
-          )
-        }}
-      />
-      <motion.div
-        whileFocus={{ scale: 1.015 }}
-        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        whileFocus={{ scale: 1.01, z: 10 }}
+        transition={{ type: "spring", stiffness: 300, damping: 25 }}
         className="relative w-full"
       >
         <InputTag
@@ -115,37 +90,34 @@ const ReactiveInput = ({ label, name, type = "text", required, value, onChange, 
           onChange={onChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
-          onMouseMove={handleMouseMove}
           rows={isTextArea ? 4 : undefined}
-          className={`w-full glass-input-slot rounded-2xl px-7 py-5 text-white placeholder-transparent focus:outline-none transition-all duration-700 font-medium relative z-10 glowing-caret placeholder-transition ${isTextArea ? 'resize-none' : ''}`}
+          className={`w-full glass-input-slot rounded-2xl px-7 py-5 text-white placeholder-transparent focus:outline-none transition-all duration-700 font-medium relative z-10 glowing-caret ${isTextArea ? 'resize-none' : ''}`}
           id={name}
         />
+        
+        {/* Physical elevation shadow for raised state */}
+        <AnimatePresence>
+          {isFocused && (
+            <motion.div 
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: 0.4, y: 10 }}
+              exit={{ opacity: 0, y: 0 }}
+              className="absolute inset-x-4 bottom-0 h-4 bg-black/40 blur-xl pointer-events-none -z-10"
+            />
+          )}
+        </AnimatePresence>
       </motion.div>
-      <div className="input-glow-sweep" />
+
       <label 
         htmlFor={name}
-        className={`absolute left-7 transition-all duration-500 pointer-events-none tracking-wide text-[10px] font-black z-20 uppercase [transition-timing-function:cubic-bezier(0.22,1,0.36,1)] ${
+        className={`absolute left-7 transition-all duration-500 pointer-events-none tracking-wide text-[9px] font-bold z-20 uppercase ${
           isFocused || value 
-          ? '-top-3 text-[#C8A97E] tracking-[0.3em] opacity-100' 
+          ? '-top-3 text-[#A1A1AA] tracking-[0.2em] opacity-100' 
           : (isTextArea ? 'top-6' : 'top-1/2 -translate-y-1/2') + ' text-[#71717A] opacity-40'
         }`}
       >
         {label}
       </label>
-      
-      <AnimatePresence>
-        {isFocused && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 rounded-2xl border-[0.5px] border-transparent"
-            style={{ 
-              boxShadow: '0 0 30px rgba(200, 169, 126, 0.05)',
-            }}
-          />
-        )}
-      </AnimatePresence>
     </div>
   );
 };
@@ -167,8 +139,9 @@ const Contact = () => {
   const smoothX = useSpring(mouseX, { stiffness: 50, damping: 20 });
   const smoothY = useSpring(mouseY, { stiffness: 50, damping: 20 });
 
-  const rotateX = useTransform(smoothY, [-500, 500], [5, -5]);
-  const rotateY = useTransform(smoothX, [-500, 500], [-5, 5]);
+  const rotateX = useTransform(smoothY, [-500, 500], [2, -2]); // SUBTLE 2deg range
+  const rotateY = useTransform(smoothX, [-500, 500], [-2, 2]);
+  const translateY = useMotionValue(0);
 
   const handleGlobalMouseMove = (e) => {
     const x = e.clientX - window.innerWidth / 2;
@@ -333,6 +306,12 @@ const Contact = () => {
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0, transition: luxuryTransition }
             }}
+            animate={{ 
+              y: [0, -6, 0], // Idle float
+            }}
+            transition={{
+                y: { duration: 8, repeat: Infinity, ease: "easeInOut" }
+            }}
             style={{ 
               rotateX, 
               rotateY,
@@ -343,22 +322,8 @@ const Contact = () => {
           >
             <motion.div 
                ref={formRef}
-               whileHover={{ 
-                 boxShadow: "0 100px 200px -40px rgba(0, 0, 0, 1), 0 0 100px rgba(200, 169, 126, 0.1)",
-               }}
-               className={`w-full max-w-xl liquid-glass-form-container p-10 sm:p-14 rounded-[3.5rem] relative group/form shadow-2xl transition-all duration-700 ${isNearForm ? 'border-[#C8A97E]/40' : 'border-[#C8A97E]/15'}`}
+               className={`w-full max-w-xl liquid-glass-form-container p-10 sm:p-14 rounded-[3.5rem] relative group/form shadow-2xl transition-all duration-700 ${isNearForm ? 'border-white/10' : 'border-white/5'}`}
             >
-              {/* Ambient Floating Light Layer */}
-              <motion.div 
-                animate={{ 
-                  x: [0, 30, -20, 0],
-                  y: [0, -40, 20, 0],
-                  opacity: [0.1, 0.2, 0.1]
-                }}
-                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#C8A97E]/15 to-transparent blur-[80px] pointer-events-none rounded-full"
-              />
-
               <div className="surface-streak" />
               <div className="absolute inset-0 bg-gradient-to-br from-[#C8A97E]/[0.05] to-transparent pointer-events-none" />
               
@@ -367,37 +332,30 @@ const Contact = () => {
                   label="Your Name" name="name" required 
                   value={formData.name} onChange={handleChange} 
                   setGlobalTyping={setIsTyping}
-                  setFocusPos={setFocusPos}
-                  setFocusIntensity={setFocusIntensity}
                 />
                 <ReactiveInput 
                   label="Email Address" name="email" type="email" required 
                   value={formData.email} onChange={handleChange} 
                   setGlobalTyping={setIsTyping}
-                  setFocusPos={setFocusPos}
-                  setFocusIntensity={setFocusIntensity}
                 />
                 <ReactiveInput 
                   label="Your Message" name="message" required isTextArea
                   value={formData.message} onChange={handleChange} 
                   setGlobalTyping={setIsTyping}
-                  setFocusPos={setFocusPos}
-                  setFocusIntensity={setFocusIntensity}
                 />
 
                 <div className="relative pt-4">
-                  <div className={`premium-button-halo transition-opacity duration-1000 ${isNearForm ? 'opacity-100' : 'opacity-40'}`} />
                   <motion.button
-                    whileHover={{ scale: 1.02, filter: "brightness(1.1)" }}
-                    whileTap={{ scale: 0.97, boxShadow: "0 5px 15px rgba(0,0,0,0.5)" }}
+                    whileHover={{ y: -2, scale: 1.01 }}
+                    whileTap={{ scale: 0.98 }}
                     type="submit"
                     disabled={status === 'loading'}
-                    className="w-full py-7 rounded-[1.5rem] premium-liquid-button text-[#050506] font-black uppercase tracking-[0.3em] text-[11px] shadow-2xl flex items-center justify-center gap-4 relative z-10 animate-breathing"
+                    className="w-full py-7 rounded-[1.5rem] premium-liquid-button text-white font-bold uppercase tracking-[0.3em] text-[10px] shadow-2xl flex items-center justify-center gap-4 relative z-10"
                   >
                     {status === 'loading' ? (
-                      <div className="w-5 h-5 border-2 border-[#08080A]/30 border-t-[#08080A] rounded-full animate-spin" />
+                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                     ) : (
-                      <>GET IN TOUCH <ArrowRight size={16} /></>
+                      <>GET IN TOUCH <ArrowRight size={14} /></>
                     )}
                   </motion.button>
                 </div>

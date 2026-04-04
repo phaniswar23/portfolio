@@ -64,34 +64,21 @@ const EliteContactBackground = ({ isTyping = false, isNearForm = false, focusPos
 
       void main() {
         vec2 uv = vUv;
-        float n = snoise(uv * 3.0 + uTime * 0.1);
+        float n = snoise(uv * 2.0 + uTime * 0.05);
         
-        // Base Deep Graphite
-        vec3 color = vec3(0.043, 0.043, 0.047); 
+        // Base Deep Graphite (Neutral)
+        vec3 color = vec3(0.03, 0.03, 0.035); 
         
-        // Organic Aurora Flow (Warm Gold & Secondary Gray)
-        float aurora = snoise(uv * 2.0 - uTime * 0.05) * 0.5 + 0.5;
-        vec3 gold = vec3(0.784, 0.663, 0.494); // #C8A97E
-        vec3 gray = vec3(0.631, 0.631, 0.667); // #A1A1AA
+        // Ultra-Subtle Ambient Drift (Low Opacity)
+        float drift = snoise(uv * 1.5 - uTime * 0.03) * 0.5 + 0.5;
+        vec3 accent = vec3(0.784, 0.663, 0.494); // #C8A97E (Soft Gold)
         
-        color = mix(color, gold, aurora * 0.08 * (1.0 + uNearForm * 0.5));
-        color = mix(color, gray, (1.0 - aurora) * 0.04);
+        // Combine for a non-glow ambient shift
+        color = mix(color, color * 1.2, drift * 0.1);
+        color = mix(color, accent, drift * 0.02); // 2% gold accent max
         
-        // Dynamic Lighting Engine
-        // 1. Mouse Glow
-        float mouseGlow = 1.0 - smoothstep(0.0, 0.6, distance(uv, uMouse));
-        color += gold * mouseGlow * 0.12 * (1.0 - uFocusIntensity);
-        
-        // 2. Focused "Lock-on" Light
-        float focusGlow = 1.0 - smoothstep(0.0, 0.4, distance(uv, uFocus));
-        color += gold * focusGlow * uFocusIntensity * 0.25;
-        
-        // Form Proximity Highlights
-        float formGlow = 1.0 - smoothstep(0.3, 0.8, distance(uv, vec2(0.75, 0.5)));
-        color += gold * formGlow * uNearForm * 0.08;
-
-        // Cinematic Vignette
-        float vignette = 1.0 - smoothstep(0.5, 1.5, length(uv - 0.5));
+        // Soft Vignette for depth, no hard edges
+        float vignette = 1.0 - smoothstep(0.4, 1.4, length(uv - 0.5));
         color *= vignette;
 
         gl_FragColor = vec4(color, 1.0);
