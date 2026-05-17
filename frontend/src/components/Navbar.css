@@ -66,8 +66,6 @@
   inset: 7px 0;
   width: 100%;
   background: var(--bubble-bg);
-  backdrop-filter: blur(30px) saturate(200%);
-  -webkit-backdrop-filter: blur(30px) saturate(200%);
   border: 1px solid rgba(212, 163, 115, 0.25);
   border-radius: 999px;
   z-index: -1;

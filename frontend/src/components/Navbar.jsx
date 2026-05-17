@@ -58,44 +58,16 @@ const Navbar = () => {
   useEffect(() => {
     const observerOptions = {
       root: null,
-      rootMargin: '-15% 0px -15% 0px', // Precise focal zone
-      threshold: [0, 0.25, 0.5, 0.75, 1.0] // Efficient resolution
+      rootMargin: '-20% 0px -20% 0px',
+      threshold: 0.2
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        ratiosRef.current.set(entry.target.id, entry.intersectionRatio);
-      });
-
-      // Find section with highest visibility ratio
-      let maxRatio = 0;
-      let winnerId = null;
-
-      ratiosRef.current.forEach((ratio, id) => {
-        if (ratio > maxRatio) {
-          maxRatio = ratio;
-          winnerId = id;
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
         }
       });
-
-      // Bottom of page rescue: Force 'contact' if we're at the very bottom
-      const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100;
-      
-      let finalWinner = winnerId;
-      let finalRatio = maxRatio;
-
-      if (isAtBottom && ratiosRef.current.has('contact')) {
-        finalWinner = 'contact';
-        finalRatio = 1;
-      }
-
-      // Only update if winner is confident and different
-      if (finalWinner && finalRatio > 0.15) {
-        setActiveSection(prev => {
-          if (prev !== finalWinner) return finalWinner;
-          return prev;
-        });
-      }
     }, observerOptions);
     
     navLinks.forEach((link) => {
@@ -104,7 +76,7 @@ const Navbar = () => {
     });
 
     return () => observer.disconnect();
-  }, []); // Run once on mount
+  }, []);
 
   // Initial Sync & Rescue Logic
   useEffect(() => {

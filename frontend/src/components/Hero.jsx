@@ -4,6 +4,110 @@ import { ArrowRight, Github, Linkedin, FileText, Code, Cpu, Database, Zap, Termi
 import profileImg from '../assets/profile.jpg';
 import ResumeHub from './ResumeHub';
 
+const TechCore = () => {
+  return (
+    <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-[#0B0B0C]/50 rounded-2xl border border-white/[0.05]">
+      {/* Background Glow */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,163,115,0.1)_0%,transparent_70%)] animate-pulse" />
+      
+      {/* Rotating Outer Ring */}
+      <motion.div 
+        animate={{ rotate: 360 }}
+        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        className="absolute w-[80%] h-[80%] border border-[#D4A373]/20 rounded-full border-dashed"
+      />
+      
+      {/* Rotating Mid Ring */}
+      <motion.div 
+        animate={{ rotate: -360 }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+        className="absolute w-[60%] h-[60%] border-2 border-[#D4A373]/10 rounded-full"
+      >
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#D4A373] rounded-full shadow-[0_0_15px_#D4A373]" />
+      </motion.div>
+      
+      {/* Inner Pulsing Core */}
+      <motion.div 
+        animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        className="relative z-10 w-24 h-24 rounded-full bg-gradient-to-br from-[#D4A373] to-[#A1A1AA] flex items-center justify-center shadow-[0_0_50px_rgba(212,163,115,0.4)]"
+      >
+        <Cpu className="w-10 h-10 text-[#0B0B0C]" />
+        
+        {/* Floating Data Bits */}
+        {Array.from({ length: 4 }).map((_, i) => (
+          <motion.div
+            key={i}
+            animate={{ 
+              rotate: [0, 360],
+              radius: [40, 60, 40]
+            }}
+            transition={{ duration: 5 + i, repeat: Infinity, ease: "linear" }}
+            className="absolute"
+          >
+            <div className="w-1 h-1 bg-[#D4A373] rounded-full" />
+          </motion.div>
+        ))}
+      </motion.div>
+
+      {/* Code Fragments */}
+      <div className="absolute inset-0 flex flex-col justify-between p-6 opacity-20 font-mono text-[8px] text-[#D4A373]">
+        <div className="flex justify-between">
+          <span>0x${Math.random().toString(16).substr(2, 4)}</span>
+          <span>INIT_CORE_v4.0</span>
+        </div>
+        <div className="flex justify-between">
+          <span>SYS_ACTIVE</span>
+          <span>{`{ status: 'LIVE' }`}</span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const TechParticles = () => {
+  const particles = Array.from({ length: 20 });
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+      {particles.map((_, i) => (
+        <motion.div
+          key={i}
+          initial={{ 
+            opacity: Math.random() * 0.3,
+            x: Math.random() * 100 + "%",
+            y: Math.random() * 100 + "%"
+          }}
+          animate={{ 
+            x: [
+              Math.random() * 100 + "%",
+              Math.random() * 100 + "%",
+              Math.random() * 100 + "%"
+            ],
+            y: [
+              Math.random() * 100 + "%",
+              Math.random() * 100 + "%",
+              Math.random() * 100 + "%"
+            ],
+            opacity: [0.1, 0.3, 0.1]
+          }}
+          transition={{ 
+            duration: 20 + Math.random() * 30,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute w-1 h-1 bg-[#D4A373] rounded-full blur-[1px]"
+        />
+      ))}
+      <svg className="absolute inset-0 w-full h-full opacity-[0.03]">
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+          <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5"/>
+        </pattern>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+    </div>
+  );
+};
+
 const Hero = ({ animateIntro }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isCardHovered, setIsCardHovered] = useState(false);
@@ -66,13 +170,14 @@ const Hero = ({ animateIntro }) => {
   return (
     <section
       onMouseMove={handleGlobalMouseMove}
-      className={`relative min-h-screen flex flex-col justify-center pt-20 pb-20 px-4 sm:px-12 md:px-20 max-w-[1600px] mx-auto overflow-hidden text-foreground cursor-default`}
+      className={`relative min-h-screen flex flex-col justify-center pt-20 pb-8 px-4 sm:px-12 md:px-20 max-w-[1600px] mx-auto overflow-hidden text-foreground cursor-default`}
     >
       <div className="absolute inset-0 pointer-events-none -z-20 overflow-hidden bg-transparent">
         {/* 3. Premium Noise Texture (Optimized) */}
         <div className="absolute inset-0 opacity-[0.012] mix-blend-overlay pointer-events-none" 
           style={{ backgroundImage: 'radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 0)', backgroundSize: '24px 24px' }} 
         />
+        <TechParticles />
       </div>
 
       {/* ── Main Layout ── */}
@@ -105,9 +210,9 @@ const Hero = ({ animateIntro }) => {
 
           {/* "I'm" lead-in */}
           <motion.p
-            initial={{ opacity: 0, x: -12 }}
+            initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.18 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="text-2xl sm:text-3xl font-light text-white/50 tracking-wide mb-0 select-none transition-colors duration-300"
           >
             I'm
@@ -115,12 +220,12 @@ const Hero = ({ animateIntro }) => {
 
           {/* Big Name */}
           <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.75, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, y: 30, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="relative mb-2 select-none"
           >
-            <span className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white leading-[0.85] block">
+            <span className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter text-white leading-[0.85] block">
               Phaniswar
             </span>
           </motion.h1>
@@ -129,7 +234,7 @@ const Hero = ({ animateIntro }) => {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
             className="text-xl sm:text-2xl font-medium mb-4 flex flex-wrap items-center gap-x-4 h-10 transition-colors duration-300"
           >
             <span className="text-[#A1A1AA] font-light italic">Building</span>
@@ -137,10 +242,10 @@ const Hero = ({ animateIntro }) => {
               <AnimatePresence mode="wait">
                 <motion.span
                   key={currentIndex}
-                  initial={{ y: 18, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -18, opacity: 0 }}
-                  transition={{ duration: 0.45, ease: "easeOut" }}
+                  initial={{ y: 24, opacity: 0, skewY: 5 }}
+                  animate={{ y: 0, opacity: 1, skewY: 0 }}
+                  exit={{ y: -24, opacity: 0, skewY: -5 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                   className="absolute left-0 text-transparent bg-clip-text bg-gradient-to-r from-white via-[#D4A373] to-[#A1A1AA] whitespace-nowrap block font-bold tracking-tight will-change-transform"
                 >
                   {capabilities[currentIndex]}
@@ -211,94 +316,76 @@ const Hero = ({ animateIntro }) => {
           </motion.div>
         </div>
 
-        {/* ── Right: Profile Card ── */}
+        {/* ── Right: Floating Holographic Display ── */}
         <motion.div
-          initial={{ opacity: 0, x: 50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.7, ease: "easeOut" }}
-          className="relative w-full max-w-sm mx-auto lg:mx-0 lg:ml-auto"
+          initial={{ opacity: 0, x: 60, scale: 0.9 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 1.2, delay: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="relative w-full max-w-lg mx-auto lg:mx-0 lg:ml-auto h-[350px] sm:h-[500px] flex items-center justify-center mt-8 lg:mt-0"
         >
-          <div className="relative lg:w-full aspect-[4/5] max-w-[400px] perspective-1200 cursor-pointer group/card">
+          {/* Main Visual Core */}
+          <div className="relative w-full aspect-square max-w-[440px] perspective-2000 group/hologram scale-[0.75] sm:scale-100">
             <motion.div
               ref={cardRef}
               onMouseMove={handleCardMouseMove}
               onMouseLeave={handleCardMouseLeave}
               style={{ rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }}
-              className="relative w-full h-full"
+              className="relative w-full h-full flex items-center justify-center"
             >
-                {/* 1. Slow moving light sweep */}
-                <div className="absolute inset-0 z-30 pointer-events-none overflow-hidden rounded-[20px]">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-[-25deg] animate-light-sweep" />
+                {/* 1. Ambient Glow System (Organic) */}
+                <div className="absolute inset-0 bg-[#D4A373]/5 blur-[100px] rounded-full animate-pulse-slow -z-10" />
+                <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-[#A1A1AA]/10 blur-[80px] rounded-full animate-pulse-slow [animation-delay:2s] -z-10" />
+
+                {/* 2. Floating Data Nodes (Holographic Panels) */}
+                
+                {/* Node 1: Availability */}
+                <motion.div 
+                  style={{ transform: "translateZ(80px)" }}
+                  className="absolute -top-12 -right-4 z-30"
+                >
+                  <div className="glass px-4 py-2 rounded-xl flex items-center gap-3 border-white/10 shadow-2xl backdrop-blur-2xl">
+                    <div className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4A373] opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D4A373]" />
+                    </div>
+                    <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#D4A373]">Active for Internship</span>
+                  </div>
+                </motion.div>
+
+                {/* Node 2: Identity Tag */}
+                <motion.div 
+                  style={{ transform: "translateZ(120px)" }}
+                  className="absolute -bottom-8 -left-4 z-30"
+                >
+                  <div className="glass p-5 rounded-2xl border-white/10 shadow-2xl backdrop-blur-2xl">
+                    <h3 className="text-white font-bold text-lg tracking-tight mb-1">Janyavula Phaniswar</h3>
+                    <div className="text-[9px] font-black uppercase tracking-[0.2em] text-[#A1A1AA]">Full Stack Architect</div>
+                  </div>
+                </motion.div>
+
+                {/* Node 3: Stats/Metric (Floating Circle) */}
+                <motion.div 
+                   style={{ transform: "translateZ(40px)" }}
+                   className="absolute top-1/2 -left-12 -translate-y-1/2 z-20 hidden md:block"
+                >
+                  <div className="w-16 h-16 rounded-full glass flex flex-col items-center justify-center border-white/10 shadow-2xl backdrop-blur-xl">
+                    <span className="text-xs font-bold text-[#D4A373]">99%</span>
+                    <span className="text-[6px] font-black uppercase text-white/40">Uptime</span>
+                  </div>
+                </motion.div>
+
+                {/* 3. The Core Visual (Neural Tech Core) */}
+                <div 
+                  style={{ transform: "translateZ(20px)" }}
+                  className="relative w-[340px] h-[340px] rounded-full overflow-hidden shadow-[0_0_80px_rgba(212,163,115,0.1)] border border-white/5"
+                >
+                  <TechCore />
                 </div>
 
-                {/* 2. Soft Outer Glow behind card */}
-                <div className="absolute inset-[-20px] bg-[#D4A373]/5 blur-[40px] rounded-[40px] -z-10 pointer-events-none opacity-50 group-hover/card:opacity-100 transition-opacity duration-500" />
-
-                {/* Glass Card Container */}
-                <div className="profile-card relative w-full h-full p-5 flex flex-col group/inner overflow-hidden z-10">
-                  {/* Image Area */}
-                  <div 
-                    style={{ transform: "translateZ(40px)" }}
-                    className="relative z-10 flex-[1.4] rounded-2xl overflow-hidden mb-6"
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-white/10 animate-pulse-glow -z-10" />
-                    
-                    <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/[0.05] shadow-2xl transition-all duration-700">
-                      <img 
-                        src={profileImg} 
-                        alt="Portrait" 
-                        className="w-full h-full object-cover object-[center_10%] transition-all duration-700 filter grayscale-[0.2] contrast-[1.05] brightness-[0.95] group-hover/inner:grayscale-0 group-hover/inner:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0C]/80 via-transparent to-transparent opacity-80" />
-                    </div>
-                  </div>
-
-                  {/* Text Content */}
-                  <div style={{ transform: "translateZ(60px)" }} className="relative z-10 px-3 pb-2">
-                    <div className="mb-5">
-                      <h3 className="text-[#F5F5F7] font-bold text-2xl tracking-tight leading-tight flex flex-wrap gap-1.5 transition-colors duration-300">
-                        {"Janyavula Phaniswar".split(" ").map((word, i) => (
-                          <motion.span
-                            key={i}
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.8 + (i * 0.1), duration: 0.5, ease: "easeOut" }}
-                          >
-                            {word}
-                          </motion.span>
-                        ))}
-                      </h3>
-                      
-                      <div className="mt-2.5 flex flex-wrap gap-1.5 ">
-                        <div className="relative px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md overflow-hidden group/pill flex flex-wrap gap-1 hover:border-[#D4A373]/40 transition-colors duration-300">
-                          {"Full Stack Web Developer".split(" ").map((word, i) => (
-                            <motion.span
-                              key={i}
-                              initial={{ opacity: 0, scale: 0.9 }}
-                              animate={{ opacity: 1, scale: 1 }}
-                              transition={{ delay: 1.2 + (i * 0.08), duration: 0.4 }}
-                              className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#D4A373]"
-                            >
-                              {word}
-                            </motion.span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Availability badge */}
-                    <div className="relative p-4 rounded-xl bg-white/5 backdrop-blur-md border border-white/10 group-hover/inner:border-[#D4A373]/40 transition-all duration-500 shadow-inner overflow-hidden group/badge">
-                      <div className="relative z-10 flex items-center gap-4">
-                        <div className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#D4A373] opacity-75" />
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-[#D4A373] shadow-[0_0_10px_rgba(212,163,115,0.8)]" />
-                        </div>
-                        <span className="text-[#D4A373] text-xs font-semibold tracking-wide uppercase group-hover/badge:text-white transition-colors duration-300">Available for Internship</span>
-                      </div>
-                      <div className="absolute inset-0 bg-gradient-to-r from-[#D4A373]/0 via-[#D4A373]/5 to-[#D4A373]/0 translate-x-[-100%] group-hover/badge:translate-x-[100%] transition-transform duration-1000" />
-                    </div>
-                  </div>
-                </div>
+                {/* 4. HUD Geometric Accents */}
+                <div className="absolute inset-[-40px] border border-[#D4A373]/10 rounded-full border-dashed animate-spin-slow pointer-events-none" />
+                <div className="absolute inset-[-20px] border border-white/5 rounded-full pointer-events-none" />
+                
             </motion.div>
           </div>
         </motion.div>

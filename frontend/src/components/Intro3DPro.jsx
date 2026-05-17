@@ -1,73 +1,77 @@
-import { useEffect } from "react";
-import { motion } from "framer-motion";
+import { Suspense, useEffect, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { motion, AnimatePresence } from "framer-motion";
+import Intro3DScene from "./Intro3DScene";
 
 export default function Intro3DPro({ onFinish }) {
-  // Auto-dismiss: play entry for ~2s, then trigger exit via parent state
+  const [showScene, setShowScene] = useState(true);
+
   useEffect(() => {
-    const timer = setTimeout(onFinish, 2200);
+    // Total animation time before transitioning to main site
+    const timer = setTimeout(() => {
+      setShowScene(false);
+      setTimeout(onFinish, 600);
+    }, 2200); // 2.2 seconds for ultra-fast cinematic sequence
+
     return () => clearTimeout(timer);
   }, [onFinish]);
 
+  const handleSkip = () => {
+    setShowScene(false);
+    setTimeout(onFinish, 300);
+  };
+
   return (
-    <motion.div
-      className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden"
-      style={{ perspective: "1200px" }}
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0, y: -60, scale: 1.05, transition: { duration: 0.6, ease: "easeInOut" } }}
-    >
-      {/* ── Background Layers ── */}
-      <div className="absolute inset-0 bg-[#0B0B0C]" />
-
-      {/* Primary animated gold orb */}
-      <motion.div
-        className="absolute top-1/2 left-1/2 w-[800px] h-[800px] -translate-x-1/2 -translate-y-1/2 bg-[#D4A373]/10 blur-[150px] rounded-full"
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      {/* Secondary neutral orb bottom-right */}
-      <motion.div
-        className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-[#A1A1AA]/10 blur-[120px] rounded-full"
-        animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.5, 0.2] }}
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-      />
-
-      {/* Vignette */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(11,11,12,0.85)_100%)] pointer-events-none" />
-
-      {/* ── Typography ── */}
-      <motion.div
-        className="text-center relative z-20 px-4"
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
-        {/* Subtle "Welcome to" label */}
-        <h2
-          className="text-sm tracking-[0.4em] text-[#D4A373]/60 uppercase mb-4 font-medium"
-          style={{ fontFamily: "'Inter', sans-serif" }}
-        >
-          Welcome to
-        </h2>
-
-        {/* Dominant heading */}
-        <motion.h1
-          className="text-7xl md:text-9xl font-extrabold tracking-tight leading-none"
-          style={{
-            fontFamily: "'Clash Display', 'Inter', sans-serif",
-            textShadow: "0 0 20px rgba(212, 163, 115, 0.2), 0 0 40px rgba(161, 161, 170, 0.15)",
+    <AnimatePresence>
+      {showScene && (
+        <motion.div
+          className="fixed inset-0 z-[9999] bg-[#050505] overflow-hidden"
+          initial={{ opacity: 1 }}
+          exit={{ 
+            opacity: 0, 
+            scale: 1.02,
+            filter: "blur(15px)",
+            transition: { duration: 0.8, ease: "easeInOut" } 
           }}
-          initial={{ scale: 0.7, rotateX: 20, filter: "blur(10px)", opacity: 0 }}
-          animate={{ scale: 1, rotateX: 0, filter: "blur(0px)", opacity: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          whileHover={{ scale: 1.02 }}
         >
-          <span className="bg-gradient-to-r from-[#D4A373] via-[#F5F5F7] to-[#A1A1AA] bg-clip-text text-transparent">
-            My Portfolio
-          </span>
-        </motion.h1>
-      </motion.div>
-    </motion.div>
+          {/* Skip Button - Top Right */}
+          <motion.button
+            onClick={handleSkip}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.3 }}
+            whileHover={{ opacity: 0.8, backgroundColor: "rgba(230, 192, 137, 0.05)" }}
+            className="absolute top-10 right-10 z-[10000] px-6 py-2 border border-[#E6C089]/20 rounded-full text-[9px] tracking-[0.4em] text-[#E6C089] uppercase font-light transition-all cursor-pointer backdrop-blur-sm"
+          >
+            Skip Sequence
+          </motion.button>
+          <div className="absolute inset-0">
+            <Canvas
+              shadows
+              gl={{ 
+                antialias: true, 
+                alpha: true,
+                powerPreference: "high-performance",
+                stencil: false,
+                depth: true
+              }}
+              camera={{ position: [0, 0, 30], fov: 45 }}
+              dpr={[1, 2]} // Support high-res screens
+            >
+              <Suspense fallback={null}>
+                <Intro3DScene />
+              </Suspense>
+            </Canvas>
+          </div>
+
+          {/* Sound simulation overlay (optional visual hint) */}
+          <div className="absolute bottom-10 left-10 opacity-30">
+            <div className="flex gap-1 items-center">
+              <div className="w-1 h-1 bg-[#E6C089] rounded-full animate-ping" />
+              <span className="text-[10px] tracking-[0.3em] text-[#E6C089] uppercase">Audio Active</span>
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

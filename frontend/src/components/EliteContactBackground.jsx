@@ -64,21 +64,34 @@ const EliteContactBackground = ({ isTyping = false, isNearForm = false, focusPos
 
       void main() {
         vec2 uv = vUv;
-        float n = snoise(uv * 2.0 + uTime * 0.05);
+        float n = snoise(uv * 3.0 + uTime * 0.1);
         
-        // Base Deep Graphite (Neutral)
-        vec3 color = vec3(0.03, 0.03, 0.035); 
+        // Base Deep Graphite
+        vec3 color = vec3(0.043, 0.043, 0.047); 
         
-        // Ultra-Subtle Ambient Drift (Low Opacity)
-        float drift = snoise(uv * 1.5 - uTime * 0.03) * 0.5 + 0.5;
-        vec3 accent = vec3(0.784, 0.663, 0.494); // #C8A97E (Soft Gold)
+        // Organic Aurora Flow (Warm Gold & Secondary Gray)
+        float aurora = snoise(uv * 2.0 - uTime * 0.05) * 0.5 + 0.5;
+        vec3 gold = vec3(0.784, 0.663, 0.494); // #C8A97E
+        vec3 gray = vec3(0.631, 0.631, 0.667); // #A1A1AA
         
-        // Combine for a non-glow ambient shift
-        color = mix(color, color * 1.2, drift * 0.1);
-        color = mix(color, accent, drift * 0.02); // 2% gold accent max
+        color = mix(color, gold, aurora * 0.08 * (1.0 + uNearForm * 0.5));
+        color = mix(color, gray, (1.0 - aurora) * 0.04);
         
-        // Soft Vignette for depth, no hard edges
-        float vignette = 1.0 - smoothstep(0.4, 1.4, length(uv - 0.5));
+        // Dynamic Lighting Engine
+        // 1. Mouse Glow
+        float mouseGlow = 1.0 - smoothstep(0.0, 0.6, distance(uv, uMouse));
+        color += gold * mouseGlow * 0.12 * (1.0 - uFocusIntensity);
+        
+        // 2. Focused "Lock-on" Light
+        float focusGlow = 1.0 - smoothstep(0.0, 0.4, distance(uv, uFocus));
+        color += gold * focusGlow * uFocusIntensity * 0.25;
+        
+        // Form Proximity Highlights
+        float formGlow = 1.0 - smoothstep(0.3, 0.8, distance(uv, vec2(0.75, 0.5)));
+        color += gold * formGlow * uNearForm * 0.08;
+
+        // Cinematic Vignette
+        float vignette = 1.0 - smoothstep(0.5, 1.5, length(uv - 0.5));
         color *= vignette;
 
         gl_FragColor = vec4(color, 1.0);
@@ -136,9 +149,22 @@ const EliteContactBackground = ({ isTyping = false, isNearForm = false, focusPos
     };
     window.addEventListener('resize', resize);
 
+    // --- Intersection Observer for Performance ---
+    let isVisible = true;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting;
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(containerRef.current);
+
     // --- Animation Loop ---
     let frameId;
     const animate = (time) => {
+      frameId = requestAnimationFrame(animate);
+      if (!isVisible) return; // Pause rendering when not visible
+
       uniforms.uTime.value = time * 0.001;
       
       // Smooth movement with inertia
@@ -160,13 +186,13 @@ const EliteContactBackground = ({ isTyping = false, isNearForm = false, focusPos
       particlesGeometry.attributes.position.needsUpdate = true;
 
       renderer.render(scene, camera);
-      frameId = requestAnimationFrame(animate);
     };
     frameId = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize', resize);
+      observer.disconnect();
       cancelAnimationFrame(frameId);
       renderer.dispose();
       material.dispose();
