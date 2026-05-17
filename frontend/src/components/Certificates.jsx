@@ -10,9 +10,8 @@ const Certificates = () => {
 
   return (
     <div className="certificates-container pt-12 pb-32 px-4 md:px-12 dark:bg-[#0B0B0C] transition-colors duration-500 min-h-screen relative">
-      {/* Background Decorative Elements */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/5 blur-[120px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-white/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-[800px] h-[800px] -translate-x-1/4 -translate-y-1/4 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 60%)' }} />
+      <div className="absolute bottom-0 right-1/4 w-[800px] h-[800px] translate-x-1/4 translate-y-1/4 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, transparent 60%)' }} />
       
       {/* Subtle background orb */}
       <motion.div 
@@ -21,7 +20,8 @@ const Certificates = () => {
           y: [0, 100, 0],
         }}
         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute bottom-[20%] right-[10%] w-[600px] h-[600px] bg-[#D4A373]/5 blur-[150px] rounded-full pointer-events-none"
+        className="absolute bottom-[20%] right-[10%] w-[800px] h-[800px] pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(212, 163, 115, 0.05) 0%, transparent 60%)' }}
       />
 
       <div className="max-w-7xl mx-auto relative z-10">

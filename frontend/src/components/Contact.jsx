@@ -170,25 +170,43 @@ const Contact = () => {
   const rotateX = useTransform(smoothY, [-500, 500], [5, -5]);
   const rotateY = useTransform(smoothX, [-500, 500], [-5, 5]);
 
-  const handleGlobalMouseMove = (e) => {
-    const x = e.clientX - window.innerWidth / 2;
-    const y = e.clientY - window.innerHeight / 2;
-    mouseX.set(x);
-    mouseY.set(y);
-
-    if (formRef.current) {
-      const rect = formRef.current.getBoundingClientRect();
-      const distance = Math.hypot(
-        e.clientX - (rect.left + rect.width / 2),
-        e.clientY - (rect.top + rect.height / 2)
-      );
-      setIsNearForm(distance < 400);
-    }
-  };
+  const formRectRef = useRef(null);
 
   useEffect(() => {
-    window.addEventListener('mousemove', handleGlobalMouseMove);
-    return () => window.removeEventListener('mousemove', handleGlobalMouseMove);
+    const updateRect = () => {
+      if (formRef.current) {
+        formRectRef.current = formRef.current.getBoundingClientRect();
+      }
+    };
+    
+    // Initial rect
+    setTimeout(updateRect, 500);
+
+    const handleGlobalMouseMove = (e) => {
+      const x = e.clientX - window.innerWidth / 2;
+      const y = e.clientY - window.innerHeight / 2;
+      mouseX.set(x);
+      mouseY.set(y);
+
+      if (formRectRef.current) {
+        const rect = formRectRef.current;
+        const distance = Math.hypot(
+          e.clientX - (rect.left + rect.width / 2),
+          e.clientY - (rect.top + rect.height / 2)
+        );
+        setIsNearForm(distance < 400);
+      }
+    };
+
+    window.addEventListener('mousemove', handleGlobalMouseMove, { passive: true });
+    window.addEventListener('scroll', updateRect, { passive: true });
+    window.addEventListener('resize', updateRect, { passive: true });
+    
+    return () => {
+      window.removeEventListener('mousemove', handleGlobalMouseMove);
+      window.removeEventListener('scroll', updateRect);
+      window.removeEventListener('resize', updateRect);
+    };
   }, []);
 
   const handleChange = (e) => {
@@ -302,7 +320,8 @@ const Contact = () => {
                   <motion.div 
                     animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
                     transition={{ duration: 8, repeat: Infinity }}
-                    className="absolute -inset-16 bg-[#C8A97E]/20 rounded-full blur-[80px] pointer-events-none" 
+                    className="absolute -inset-16 rounded-full pointer-events-none"
+                    style={{ background: 'radial-gradient(circle, rgba(200, 169, 126, 0.15) 0%, transparent 60%)' }} 
                   />
                   <div className="w-40 h-40 md:w-52 md:h-52 rounded-full overflow-hidden border border-white/10 relative z-10 shadow-2xl group-hover/card:border-[#C8A97E]/60 transition-all duration-1000">
                     <img src={profileImg} alt="Phaniswar J." className="w-full h-full object-cover grayscale-[0.1] group-hover/card:grayscale-0 transition-all duration-1000 scale-[1.02] group-hover/card:scale-110" />
@@ -356,7 +375,8 @@ const Contact = () => {
                   opacity: [0.1, 0.2, 0.1]
                 }}
                 transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-                className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#C8A97E]/15 to-transparent blur-[80px] pointer-events-none rounded-full"
+                className="absolute top-0 right-0 w-64 h-64 pointer-events-none rounded-full"
+                style={{ background: 'radial-gradient(circle, rgba(200, 169, 126, 0.15) 0%, transparent 70%)' }}
               />
 
               <div className="surface-streak" />

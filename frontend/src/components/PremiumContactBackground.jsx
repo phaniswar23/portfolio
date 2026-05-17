@@ -157,14 +157,16 @@ const PremiumContactBackground = ({ isTyping = false, isNearForm = false }) => {
             scale: isNearForm ? 1.2 : 1,
             opacity: isNearForm ? 0.4 : 0.2
           }}
-          className="absolute top-[10%] left-[10%] w-[40%] h-[40%] bg-[#C8A97E] blur-[120px] rounded-full animate-blob-float" 
+          className="absolute top-[10%] left-[10%] w-[50%] h-[50%] animate-blob-float rounded-full pointer-events-none" 
+          style={{ background: 'radial-gradient(circle, rgba(200, 169, 126, 0.4) 0%, transparent 60%)' }}
         />
         <motion.div 
           animate={{ 
             scale: isNearForm ? 1.1 : 1,
             opacity: isNearForm ? 0.3 : 0.2
           }}
-          className="absolute bottom-[10%] right-[10%] w-[40%] h-[40%] bg-[#A1A1AA] blur-[120px] rounded-full animate-blob-float-delayed" 
+          className="absolute bottom-[10%] right-[10%] w-[50%] h-[50%] animate-blob-float-delayed rounded-full pointer-events-none" 
+          style={{ background: 'radial-gradient(circle, rgba(161, 161, 170, 0.4) 0%, transparent 60%)' }}
         />
       </div>
 
@@ -186,7 +188,8 @@ const PremiumContactBackground = ({ isTyping = false, isNearForm = false }) => {
             animate={{ opacity: 0.1, scale: 1.2 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1, repeat: Infinity }}
-            className="absolute inset-0 bg-[#C8A97E]/5 blur-[100px] z-10 pointer-events-none"
+            className="absolute inset-[-100px] z-10 pointer-events-none rounded-full"
+            style={{ background: 'radial-gradient(circle, rgba(200, 169, 126, 0.05) 0%, transparent 60%)' }}
           />
         )}
       </AnimatePresence>

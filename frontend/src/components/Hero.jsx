@@ -333,8 +333,8 @@ const Hero = ({ animateIntro }) => {
               className="relative w-full h-full flex items-center justify-center"
             >
                 {/* 1. Ambient Glow System (Organic) */}
-                <div className="absolute inset-0 bg-[#D4A373]/5 blur-[100px] rounded-full animate-pulse-slow -z-10" />
-                <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-[#A1A1AA]/10 blur-[80px] rounded-full animate-pulse-slow [animation-delay:2s] -z-10" />
+                <div className="absolute inset-[-100px] animate-pulse-slow -z-10 pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(212, 163, 115, 0.05) 0%, transparent 60%)' }} />
+                <div className="absolute top-0 left-0 w-full h-full animate-pulse-slow [animation-delay:2s] -z-10 pointer-events-none" style={{ background: 'radial-gradient(circle at 50% 50%, rgba(161, 161, 170, 0.1) 0%, transparent 60%)' }} />
 
                 {/* 2. Floating Data Nodes (Holographic Panels) */}
                 

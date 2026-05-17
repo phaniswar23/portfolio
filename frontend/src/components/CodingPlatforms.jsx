@@ -383,7 +383,7 @@ const SignatureCard = ({ platform, index }) => {
 
         {/* Ambient Back Glow */}
         <div 
-          className="absolute -inset-20 opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none blur-[100px]"
+          className="absolute -inset-20 opacity-0 group-hover:opacity-20 transition-opacity duration-700 pointer-events-none"
           style={{ background: `radial-gradient(circle at center, ${platform.color}, transparent 70%)` }}
         />
 
@@ -486,8 +486,10 @@ const CodingPlatforms = () => {
 
   return (
     <section ref={containerRef} onMouseMove={(e) => {
-        const r = containerRef.current?.getBoundingClientRect();
-        if (r) { mouseX.set(e.clientX - r.left); mouseY.set(e.clientY - r.top); }
+        // Fallback or rough calculation to avoid layout thrashing
+        // Using window coordinates for a rough spotlight
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
       }}
       className="pt-12 pb-40 px-4 md:px-8 bg-transparent relative overflow-hidden flex flex-col items-center border-t border-white/[0.02]"
     >
@@ -497,7 +499,7 @@ const CodingPlatforms = () => {
         style={{ 
           background: useTransform(
             [mouseX, mouseY], 
-            ([x, y]) => `radial-gradient(1000px circle at ${x}px ${y}px, rgba(255,255,255,0.01), transparent 70%)`
+            ([x, y]) => `radial-gradient(800px circle at ${x}px ${y}px, rgba(255,255,255,0.015), transparent 70%)`
           )
         }}
       />
@@ -550,8 +552,8 @@ const CodingPlatforms = () => {
           }
         `}} />
 
-        <div className="absolute top-[10%] left-[10%] w-[30%] h-[30%] bg-[#D4A373]/5 blur-[120px] rounded-full" />
-        <div className="absolute bottom-[10%] right-[10%] w-[30%] h-[30%] bg-[#A1A1AA]/5 blur-[120px] rounded-full" />
+        <div className="absolute top-[10%] left-[10%] w-[50%] h-[50%] pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(212, 163, 115, 0.05) 0%, transparent 60%)' }} />
+        <div className="absolute bottom-[10%] right-[10%] w-[50%] h-[50%] pointer-events-none" style={{ background: 'radial-gradient(circle, rgba(161, 161, 170, 0.05) 0%, transparent 60%)' }} />
       </div>
 
 
